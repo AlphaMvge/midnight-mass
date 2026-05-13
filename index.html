@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midnight Mass</title>
+    <!-- Use Google Fonts Outfit as a fallback for Gued -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    <div class="scanlines"></div>
+
+    <header>
+        <div class="logo-container">
+            <h1 class="glitch" data-text="MIDNIGHT MASS">MIDNIGHT MASS</h1>
+            <p class="subtitle">A digital haven for ideas, tools, and queries.</p>
+        </div>
+        <nav class="filter-nav">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="idea">Ideas</button>
+            <button class="filter-btn" data-filter="tool">Tools</button>
+            <button class="filter-btn" data-filter="quote">Quotes</button>
+            <button class="filter-btn" data-filter="question">Questions</button>
+        </nav>
+    </header>
+
+    <main class="grid-container" id="board">
+        <!-- Idea Card -->
+        <article class="card idea animate-on-scroll">
+            <div class="card-glow"></div>
+            <div class="card-content">
+                <span class="tag">Idea</span>
+                <h2>Cyberpunk CSS Framework</h2>
+                <p>What if we built a lightweight CSS framework exclusively using the Tokyo Night color palette? Built-in neon glows, glassmorphism, and glitch components.</p>
+                <div class="meta">
+                    <span class="author">@syntax</span>
+                    <span class="date">Oct 24</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- Tool Card -->
+        <article class="card tool animate-on-scroll">
+            <div class="card-glow"></div>
+            <div class="card-content">
+                <span class="tag">Tool</span>
+                <h2>Figma to Code</h2>
+                <p>Found this incredible plugin that maps Figma tokens directly to CSS variables. Huge time saver for translating designs into code.</p>
+                <a href="#" class="card-link">View Resource ↗</a>
+                <div class="meta">
+                    <span class="author">@aero</span>
+                    <span class="date">Oct 23</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- Quote Card -->
+        <article class="card quote animate-on-scroll">
+            <div class="card-glow"></div>
+            <div class="card-content">
+                <span class="tag">Quote</span>
+                <blockquote class="cyber-quote">
+                    "The quietest people have the loudest minds."
+                </blockquote>
+                <div class="meta">
+                    <span class="author">Stephen Hawking</span>
+                </div>
+            </div>
+        </article>
+
+        <!-- Question Card -->
+        <article class="card question animate-on-scroll">
+            <div class="card-glow"></div>
+            <div class="card-content">
+                <span class="tag">Question</span>
+                <h2>Optimal Grid Layouts</h2>
+                <p>Does anyone have a solid approach for masonry layouts using pure CSS Grid without relying on JavaScript to calculate heights?</p>
+                <div class="meta">
+                    <span class="author">@nullpointer</span>
+                    <span class="date">Oct 22</span>
+                </div>
+            </div>
+        </article>
+        
+        <!-- Another Tool -->
+        <article class="card tool animate-on-scroll">
+            <div class="card-glow"></div>
+            <div class="card-content">
+                <span class="tag">Tool</span>
+                <h2>Neovim Tokyo Night</h2>
+                <p>The definitive Tokyo Night theme for Neovim. Highly recommend setting this up if you want your terminal to match this aesthetic.</p>
+                <a href="#" class="card-link">View Resource ↗</a>
+                <div class="meta">
+                    <span class="author">@syntax</span>
+                    <span class="date">Oct 22</span>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <p>Made by <span class="creator">alphamage</span></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
