@@ -1,0 +1,122 @@
+{
+  "project": "Midnight Mass",
+  "version": "2.0.0",
+  "type": "Discord Server Brand & Media Palette",
+  "description": "Unified brand color system and gradient recipes for owners and admins creating Midnight Mass graphics, banners, and promotional media.",
+  "colors": {
+    "background": {
+      "void_black": {
+        "hex": "#0B0B0B",
+        "rgb": [11, 11, 11],
+        "usage": "Primary dark canvas, void backgrounds"
+      },
+      "deep_night": {
+        "hex": "#121119",
+        "rgb": [18, 17, 25],
+        "usage": "Card backgrounds, panel fills, UI containers"
+      },
+      "midnight_navy": {
+        "hex": "#1E324D",
+        "rgb": [30, 50, 77],
+        "usage": "Cathedral sky tones, subtle shadows, right-gradient base"
+      },
+      "dark_indigo": {
+        "hex": "#1A1C29",
+        "rgb": [26, 28, 41],
+        "usage": "Elevated UI panels, secondary surfaces"
+      }
+    },
+    "gradient_flow": {
+      "stage_1_crimson_rose": {
+        "hex": "#E11D48",
+        "rgb": [225, 29, 72],
+        "usage": "Left side gradient anchor, wordmark left glow ('The')"
+      },
+      "stage_2_neon_purple": {
+        "hex": "#8B5CF6",
+        "rgb": [139, 92, 246],
+        "usage": "Center gradient anchor, core brand violet ('Midnight')"
+      },
+      "stage_3_electric_blue": {
+        "hex": "#2563EB",
+        "rgb": [37, 99, 235],
+        "usage": "Right gradient anchor, sky aura ('Mass')"
+      },
+      "stage_3_cyan_glow": {
+        "hex": "#06B6D4",
+        "rgb": [6, 182, 212],
+        "usage": "Rightmost neon halo highlights and outer reflections"
+      }
+    },
+    "accent_purple": {
+      "neon_purple": {
+        "hex": "#8B5CF6",
+        "rgb": [139, 92, 246],
+        "usage": "Primary brand accent, halo glows, interactive buttons"
+      },
+      "electric_violet": {
+        "hex": "#7C3AED",
+        "rgb": [124, 58, 237],
+        "usage": "Strong purple accent, focused states"
+      },
+      "deep_purple": {
+        "hex": "#572B8D",
+        "rgb": [87, 43, 141],
+        "usage": "Shadow undertones on glowing text"
+      },
+      "soft_lavender": {
+        "hex": "#A78BFA",
+        "rgb": [167, 139, 250],
+        "usage": "Hover states, subtitle accents, secondary text"
+      }
+    },
+    "blood_accent": {
+      "crimson": {
+        "hex": "#9B1B1B",
+        "rgb": [155, 27, 27],
+        "usage": "Primary blood drip accent on wordmark letters"
+      },
+      "dried_blood": {
+        "hex": "#6B1515",
+        "rgb": [107, 21, 21],
+        "usage": "Subtle red weathering and shadow accents"
+      }
+    },
+    "moon_and_text": {
+      "pure_white": {
+        "hex": "#FFFFFF",
+        "rgb": [255, 255, 255],
+        "usage": "Title inline stroke, high contrast headings"
+      },
+      "off_white": {
+        "hex": "#F5F5F7",
+        "rgb": [245, 245, 247],
+        "usage": "Body text and copy"
+      },
+      "cool_moonlight": {
+        "hex": "#D0D8E8",
+        "rgb": [208, 216, 232],
+        "usage": "Moon glow effects, secondary text"
+      }
+    }
+  },
+  "gradient_recipes": {
+    "gothic_tri_color_glow": {
+      "css": "linear-gradient(90deg, #E11D48 0%, #8B5CF6 50%, #2563EB 100%)",
+      "photoshop_stops": [
+        {"position": "0%", "hex": "#E11D48"},
+        {"position": "50%", "hex": "#8B5CF6"},
+        {"position": "100%", "hex": "#2563EB"}
+      ],
+      "usage": "Master Title Wordmarks ('The Midnight Mass' Blackletter style)"
+    },
+    "neon_halo": {
+      "css": "radial-gradient(circle, rgba(139,92,246,0.6) 0%, rgba(37,99,235,0.3) 50%, transparent 80%)",
+      "usage": "Background glows behind logos and characters"
+    },
+    "void_overlay": {
+      "css": "linear-gradient(180deg, rgba(11,11,11,0.2) 0%, #0B0B0B 100%)",
+      "usage": "Poster and banner dark bottom fades"
+    }
+  }
+}
