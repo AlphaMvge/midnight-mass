@@ -1,111 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Midnight Mass</title>
-    <!-- Use Google Fonts Outfit as a fallback for Gued -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Midnight Mass — Sacred QR Generator & Growth Hub</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+  
+  <!-- Sacred Codex Styles -->
+  <link rel="stylesheet" href="codex_styles.css">
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    <div class="scanlines"></div>
 
+  <!-- Ambient Fog & Candlelight Flicker Effect Overlay -->
+  <div class="candlelight-overlay"></div>
+
+  <div class="container">
+    
+    <!-- Sacred Header -->
     <header>
-        <div class="logo-container">
-            <h1 class="glitch" data-text="MIDNIGHT MASS">MIDNIGHT MASS</h1>
-            <p class="subtitle">A digital haven for ideas, tools, and queries.</p>
-        </div>
-        <nav class="filter-nav">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="idea">Ideas</button>
-            <button class="filter-btn" data-filter="tool">Tools</button>
-            <button class="filter-btn" data-filter="quote">Quotes</button>
-            <button class="filter-btn" data-filter="question">Questions</button>
-        </nav>
+      <div class="sacred-emblem-header" id="headerSacredEmblem">
+        <svg viewBox="0 0 24 24"><path d="M12 2C11.5 3.5 10 5 10 7C10 8.7 11.3 10 13 10C14.7 10 16 8.7 16 7C16 5 14.5 3.5 14 2C13.5 3 12.5 3 12 2ZM9 11H15V22H9V11Z"/></svg>
+      </div>
+      <div class="brand-badge">Official Midnight Mass Growth Hub</div>
+      <h1 class="codex-hero-title">The Midnight Mass</h1>
+      <p class="codex-hero-subtitle">Sacred QR Generator & High-Traffic Growth Hub</p>
     </header>
 
-    <main class="grid-container" id="board">
-        <!-- Idea Card -->
-        <article class="card idea animate-on-scroll">
-            <div class="card-glow"></div>
-            <div class="card-content">
-                <span class="tag">Idea</span>
-                <h2>Cyberpunk CSS Framework</h2>
-                <p>What if we built a lightweight CSS framework exclusively using the Tokyo Night color palette? Built-in neon glows, glassmorphism, and glitch components.</p>
-                <div class="meta">
-                    <span class="author">@syntax</span>
-                    <span class="date">Oct 24</span>
-                </div>
-            </div>
-        </article>
+    <!-- Customizer Control Bar -->
+    <div class="customizer-bar">
+      <div class="control-group">
+        <span class="control-label">Font Vote:</span>
+        <select class="control-select" id="fontSelector">
+          <option value="classic">1. Classic (Cinzel / Inter)</option>
+          <option value="softer">2. Softer (Playfair / Source Sans)</option>
+        </select>
+      </div>
 
-        <!-- Tool Card -->
-        <article class="card tool animate-on-scroll">
-            <div class="card-glow"></div>
-            <div class="card-content">
-                <span class="tag">Tool</span>
-                <h2>Figma to Code</h2>
-                <p>Found this incredible plugin that maps Figma tokens directly to CSS variables. Huge time saver for translating designs into code.</p>
-                <a href="#" class="card-link">View Resource ↗</a>
-                <div class="meta">
-                    <span class="author">@aero</span>
-                    <span class="date">Oct 23</span>
-                </div>
-            </div>
-        </article>
+      <div class="control-group">
+        <span class="control-label">Logo Vote:</span>
+        <select class="control-select" id="logoSelector">
+          <option value="brand_logo_300" selected>1. Official Emblem (300x300 Brand Logo)</option>
+          <option value="candle">2. Minimal Candle</option>
+          <option value="gothic_m">3. Stylized Gothic M</option>
+          <option value="cross">4. Thin Sacred Cross</option>
+        </select>
+      </div>
 
-        <!-- Quote Card -->
-        <article class="card quote animate-on-scroll">
-            <div class="card-glow"></div>
-            <div class="card-content">
-                <span class="tag">Quote</span>
-                <blockquote class="cyber-quote">
-                    "The quietest people have the loudest minds."
-                </blockquote>
-                <div class="meta">
-                    <span class="author">Stephen Hawking</span>
-                </div>
-            </div>
-        </article>
+      <div class="control-group">
+        <span class="control-label">Mood Vote:</span>
+        <select class="control-select" id="moodSelector">
+          <option value="quiet">1. Quiet & Elegant</option>
+          <option value="heavy">2. Darker & Heavier</option>
+          <option value="cinematic">3. Moody Cinematic</option>
+        </select>
+      </div>
+    </div>
 
-        <!-- Question Card -->
-        <article class="card question animate-on-scroll">
-            <div class="card-glow"></div>
-            <div class="card-content">
-                <span class="tag">Question</span>
-                <h2>Optimal Grid Layouts</h2>
-                <p>Does anyone have a solid approach for masonry layouts using pure CSS Grid without relying on JavaScript to calculate heights?</p>
-                <div class="meta">
-                    <span class="author">@nullpointer</span>
-                    <span class="date">Oct 22</span>
-                </div>
-            </div>
-        </article>
-        
-        <!-- Another Tool -->
-        <article class="card tool animate-on-scroll">
-            <div class="card-glow"></div>
-            <div class="card-content">
-                <span class="tag">Tool</span>
-                <h2>Neovim Tokyo Night</h2>
-                <p>The definitive Tokyo Night theme for Neovim. Highly recommend setting this up if you want your terminal to match this aesthetic.</p>
-                <a href="#" class="card-link">View Resource ↗</a>
-                <div class="meta">
-                    <span class="author">@syntax</span>
-                    <span class="date">Oct 22</span>
-                </div>
-            </div>
-        </article>
-    </main>
+    <!-- Navigation Tabs -->
+    <div class="codex-tabs">
+      <button class="tab-btn active" data-tab="qrGeneratorTab">
+        <span>✦</span> Sacred QR Generator
+      </button>
+      <button class="tab-btn" data-tab="printablePosterTab">
+        <span>📜</span> Printable Codex Poster
+      </button>
+      <button class="tab-btn" data-tab="trackingSetupTab">
+        <span>⚡</span> Dynamic Tracking Hub
+      </button>
+      <button class="tab-btn" data-tab="strategyDirectoryTab">
+        <span>🏛️</span> High-Traffic Directory
+      </button>
+    </div>
 
-    <footer class="site-footer">
-        <p>Made by <span class="creator">alphamage</span></p>
-    </footer>
+    <!-- TAB 1: SACRED QR GENERATOR -->
+    <div id="qrGeneratorTab" class="tab-content app-grid">
+      
+      <!-- Controls Panel -->
+      <div class="codex-card">
+        <div class="card-title-header">
+          <div class="card-icon">✦</div>
+          <h2 class="card-title">Codex Parameters</h2>
+        </div>
 
-    <script src="script.js"></script>
+        <div class="form-group">
+          <label class="form-label">Destination URL or Invite Link</label>
+          <input type="text" id="baseUrlInput" class="form-input" value="https://discord.gg/midnightmass" placeholder="https://discord.gg/midnightmass">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">UTM Campaign Source (Tracking Tag)</label>
+          <select id="utmSourceSelect" class="form-select">
+            <option value="street_sticker">Street Sticker Slap</option>
+            <option value="tiktok_bio">TikTok Bio Link</option>
+            <option value="r_goth">Reddit /r/goth Post</option>
+            <option value="club_flyer">Goth Club Restroom Flyer</option>
+            <option value="apparel_tag">Merch Package Insert Card</option>
+            <option value="custom">Custom Tag...</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Custom Campaign URL (Optional Overwrite)</label>
+          <input type="text" id="customUrlInput" class="form-input" placeholder="Paste custom trackable short link (e.g. https://mass.link/subway)">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">QR Module Pattern</label>
+          <select id="moduleShapeSelect" class="form-select">
+            <option value="gothic_diamond">Gothic Diamond (Illuminated Codex)</option>
+            <option value="rounded">Sacred Droplet (Rounded)</option>
+            <option value="cross">Gothic Cross-Dot</option>
+            <option value="square">Classic Gothic Square</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Color Palette Presets (Official Brand System)</label>
+          <select id="colorPresetSelect" class="form-select">
+            <option value="gothic_tri_color" selected>1. Gothic Tri-Color Glow (#E11D48 / #8B5CF6 / #2563EB)</option>
+            <option value="neon_purple_blue">2. Neon Purple & Electric Blue (#8B5CF6 / #2563EB / #0B0B0B)</option>
+            <option value="cyan_abyss">3. Cyan Aura & Deep Night (#06B6D4 / #2563EB / #121119)</option>
+            <option value="crimson_blood">4. Crimson Rose & Blood Drip (#E11D48 / #9B1B1B / #0B0B0B)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Center Emblem Overlay</label>
+          <input type="file" id="customLogoInput" class="form-input" accept="image/*">
+        </div>
+      </div>
+
+      <!-- Live Stage & Download Panel -->
+      <div class="codex-card">
+        <div class="card-title-header">
+          <div class="card-icon">⚡</div>
+          <h2 class="card-title">Live Codex Preview</h2>
+        </div>
+
+        <div class="preview-stage">
+          <div class="canvas-wrapper">
+            <canvas id="qrCanvas"></canvas>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Final Trackable URL String</label>
+          <div style="display: flex; gap: 10px;">
+            <div id="finalUrlDisplay" class="form-input" style="font-family: monospace; font-size: 0.8rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              https://discord.gg/midnightmass?utm_source=street_sticker
+            </div>
+            <button id="copyUrlBtn" class="btn-secondary" style="white-space: nowrap;">Copy Link</button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px;">
+          <button id="downloadPngBtn" class="btn-primary">
+            <span>↓</span> High-Res PNG (3000px)
+          </button>
+          <button id="downloadSvgBtn" class="btn-secondary">
+            <span>◇</span> Vector SVG Export
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: PRINTABLE CODEX POSTER BUILDER -->
+    <div id="printablePosterTab" class="tab-content hidden">
+      <div class="codex-card" style="max-width: 800px; margin: 0 auto;">
+        <div class="card-title-header" style="justify-content: space-between;">
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="card-icon">📜</div>
+            <h2 class="card-title">Printable Codex Poster / Flyer (300 DPI Ready)</h2>
+          </div>
+          <button id="printPosterBtn" class="btn-primary" style="width: auto; padding: 10px 20px;">
+            <span>🖨️</span> Print / Save PDF
+          </button>
+        </div>
+
+        <!-- Poster Print Frame -->
+        <div class="poster-preview-container">
+          <div class="poster-header-title">The Midnight Mass</div>
+          <div class="poster-subtitle">A Late-Night Sanctuary for the Sleepless</div>
+          
+          <div id="posterQrFrame" class="poster-qr-frame"></div>
+          
+          <div class="poster-cta-text">Scan to Enter the Sanctuary</div>
+          <div id="posterUrlTag" class="poster-url-badge">discord.gg/midnightmass</div>
+          
+          <div class="poster-merch-tag">
+            ✦ Midnight Mass Apparel & Merch Dropping Soon ✦<br>
+            Dark Aesthetics • Real Conversations • Quiet Intensity
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: DYNAMIC TRACKING & LINK SHORTENER GUIDE -->
+    <div id="trackingSetupTab" class="tab-content hidden">
+      <div class="codex-card" style="max-width: 860px; margin: 0 auto;">
+        <div class="card-title-header">
+          <div class="card-icon">⚡</div>
+          <h2 class="card-title">Dynamic Link & Scan Analytics Architecture</h2>
+        </div>
+
+        <p style="color: var(--muted-parchment); margin-bottom: 24px;">
+          To promote **Midnight Mass** effectively and track which stickers, flyers, or subreddits bring in the most server members, use short-link redirects that record every scan automatically.
+        </p>
+
+        <div style="display: grid; gap: 20px;">
+          <div class="strategy-item-card">
+            <h3 style="color: var(--gold-glow); font-family: var(--font-title); margin-bottom: 8px;">1. Free Dynamic Tracking Platforms</h3>
+            <p style="font-size: 0.9rem; color: var(--off-white);">
+              Create free accounts on <strong style="color: var(--gold-leaf);">Dub.co</strong>, <strong style="color: var(--gold-leaf);">Short.io</strong>, or <strong style="color: var(--gold-leaf);">Bitly</strong>.
+              Point custom short links (e.g. <code style="color: var(--gold-glow);">mass.link/subway</code>) directly to <code style="color: var(--gold-glow);">discord.gg/midnightmass?utm_source=subway</code>.
+            </p>
+          </div>
+
+          <div class="strategy-item-card">
+            <h3 style="color: var(--gold-glow); font-family: var(--font-title); margin-bottom: 8px;">2. Dynamic Redirect Advantage</h3>
+            <p style="font-size: 0.9rem; color: var(--off-white);">
+              If your Discord invite URL ever changes, dynamic short links allow you to update the destination URL without having to re-print your stickers or posters!
+            </p>
+          </div>
+
+          <div class="strategy-item-card">
+            <h3 style="color: var(--gold-glow); font-family: var(--font-title); margin-bottom: 8px;">3. Recommended Campaign Tagging Matrix</h3>
+            <ul style="padding-left: 20px; font-size: 0.9rem; color: var(--muted-parchment);">
+              <li><strong>Street Stickers</strong>: <code style="color: var(--gold-glow);">utm_source=sticker_restroom</code></li>
+              <li><strong>Campus Flyers</strong>: <code style="color: var(--gold-glow);">utm_source=poster_campus</code></li>
+              <li><strong>TikTok & Instagram Bios</strong>: <code style="color: var(--gold-glow);">utm_source=social_tiktok</code></li>
+              <li><strong>Merch Package Inserts</strong>: <code style="color: var(--gold-glow);">utm_source=merch_insert_card</code></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: HIGH-TRAFFIC PLACEMENT DIRECTORY -->
+    <div id="strategyDirectoryTab" class="tab-content hidden">
+      <div class="codex-card">
+        <div class="card-title-header">
+          <div class="card-icon">🏛️</div>
+          <h2 class="card-title">High-Traffic Specific Placement Directory</h2>
+        </div>
+        <p style="color: var(--muted-parchment); margin-bottom: 24px;">
+          Specific high-volume websites, subreddits, directories, and physical locations to slap QR codes and post Midnight Mass invitations for maximum conversion.
+        </p>
+
+        <div class="strategy-card-grid">
+
+          <!-- Reddit Communities -->
+          <div class="strategy-item-card">
+            <div class="strategy-header">
+              <span class="strategy-title">r/goth</span>
+              <span class="strategy-badge">Subreddit • 180k+</span>
+            </div>
+            <a href="https://reddit.com/r/goth" target="_blank" class="strategy-url-link">https://reddit.com/r/goth</a>
+            <p style="font-size: 0.85rem; color: var(--muted-parchment); margin-bottom: 12px;">
+              Post aesthetic community intros, gothic music discussions, and link in bio.
+            </p>
+            <button class="strategy-copy-btn" onclick="navigator.clipboard.writeText('https://reddit.com/r/goth')">Copy Direct Link</button>
+          </div>
+
+          <div class="strategy-item-card">
+            <div class="strategy-header">
+              <span class="strategy-title">r/DarkAcademia</span>
+              <span class="strategy-badge">Subreddit • 210k+</span>
+            </div>
+            <a href="https://reddit.com/r/DarkAcademia" target="_blank" class="strategy-url-link">https://reddit.com/r/DarkAcademia</a>
+            <p style="font-size: 0.85rem; color: var(--muted-parchment); margin-bottom: 12px;">
+              High alignment with candlelight, cathedral, and late-night aesthetic discussions.
+            </p>
+            <button class="strategy-copy-btn" onclick="navigator.clipboard.writeText('https://reddit.com/r/DarkAcademia')">Copy Direct Link</button>
+          </div>
+
+          <div class="strategy-item-card">
+            <div class="strategy-header">
+              <span class="strategy-title">r/DiscordServers</span>
+              <span class="strategy-badge">Subreddit • 120k+</span>
+            </div>
+            <a href="https://reddit.com/r/DiscordServers" target="_blank" class="strategy-url-link">https://reddit.com/r/DiscordServers</a>
+            <p style="font-size: 0.85rem; color: var(--muted-parchment); margin-bottom: 12px;">
+              Direct server promotion sub. Post high-res poster graphics with embedded QR code.
+            </p>
+            <button class="strategy-copy-btn" onclick="navigator.clipboard.writeText('https://reddit.com/r/DiscordServers')">Copy Direct Link</button>
+          </div>
+
+          <!-- Discord Listing Platforms -->
+          <div class="strategy-item-card">
+            <div class="strategy-header">
+              <span class="strategy-title">Disboard Server List</span>
+              <span class="strategy-badge">Top Directory</span>
+            </div>
+            <a href="https://disboard.org" target="_blank" class="strategy-url-link">https://disboard.org</a>
+            <p style="font-size: 0.85rem; color: var(--muted-parchment); margin-bottom: 12px;">
+              Add tags: <code style="color: var(--gold-glow);">goth</code>, <code style="color: var(--gold-glow);">night-owl</code>, <code style="color: var(--gold-glow);">chill</code>, <code style="color: var(--gold-glow);">aesthetic</code>. Bump every 2 hours.
+            </p>
+            <button class="strategy-copy-btn" onclick="navigator.clipboard.writeText('https://disboard.org')">Copy Direct Link</button>
+          </div>
+
+          <div class="strategy-item-card">
+            <div class="strategy-header">
+              <span class="strategy-title">Top.gg Server Directory</span>
+              <span class="strategy-badge">Top Directory</span>
+            </div>
+            <a href="https://top.gg/servers" target="_blank" class="strategy-url-link">https://top.gg/servers</a>
+            <p style="font-size: 0.85rem; color: var(--muted-parchment); margin-bottom: 12px;">
+              List Midnight Mass with gothic nun preview media and official invite link.
+            </p>
+            <button class="strategy-copy-btn" onclick="navigator.clipboard.writeText('https://top.gg/servers')">Copy Direct Link</button>
+          </div>
+
+          <div class="strategy-item-card">
+            <div class="strategy-header">
+              <span class="strategy-title">VampireFreaks Network</span>
+              <span class="strategy-badge">Subculture Platform</span>
+            </div>
+            <a href="https://vampirefreaks.com" target="_blank" class="strategy-url-link">https://vampirefreaks.com</a>
+            <p style="font-size: 0.85rem; color: var(--muted-parchment); margin-bottom: 12px;">
+              Legacy gothic subculture portal & industrial music community.
+            </p>
+            <button class="strategy-copy-btn" onclick="navigator.clipboard.writeText('https://vampirefreaks.com')">Copy Direct Link</button>
+          </div>
+
+          <!-- Physical Guerilla Spots -->
+          <div class="strategy-item-card">
+            <div class="strategy-header">
+              <span class="strategy-title">Underground Venue Restrooms</span>
+              <span class="strategy-badge">Physical Guerilla</span>
+            </div>
+            <span class="strategy-url-link">Goth Clubs / Industrial Venues / Alt Bars</span>
+            <p style="font-size: 0.85rem; color: var(--muted-parchment); margin-bottom: 12px;">
+              Slap 3x3" gold filigree vinyl stickers near mirror corners and stall doors.
+            </p>
+          </div>
+
+          <div class="strategy-item-card">
+            <div class="strategy-header">
+              <span class="strategy-title">Merch Package Inserts</span>
+              <span class="strategy-badge">Apparel Cross-Sell</span>
+            </div>
+            <span class="strategy-url-link">Every Hoodie / Shirt Order</span>
+            <p style="font-size: 0.85rem; color: var(--muted-parchment); margin-bottom: 12px;">
+              Insert printed illuminated codex card with QR code giving exclusive VIP role.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- App Script Engine -->
+  <script src="qr_app.js"></script>
 </body>
 </html>
