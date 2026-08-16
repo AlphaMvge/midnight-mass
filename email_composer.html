@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Midnight Mass — Email Campaign Composer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a060d; --wine: #1e0811; --blood: #540d1a;
+      --sacred: #8c1424; --flame: #b3202e;
+      --gold: #d4af37; --glow: #e6c66d; --parchment: #c7b39b;
+      --white: #f3efe6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--white);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background-image: radial-gradient(circle at 50% 0%, rgba(84,13,26,.4) 0%, transparent 60%);
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(10,6,13,.8) 100%);
+      z-index: 0;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; position: relative; z-index: 1; }
+
+    header { text-align: center; margin-bottom: 40px; }
+    .blackletter {
+      font-family: 'UnifrakturMaguntia', cursive;
+      font-size: 3rem;
+      background: linear-gradient(180deg, var(--white) 0%, var(--glow) 40%, var(--gold) 80%, var(--sacred) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 12px rgba(212,175,55,.4));
+    }
+    .subtitle { font-family: 'Cinzel', serif; font-size: .85rem; letter-spacing: .25em; color: var(--parchment); margin-top: 8px; text-transform: uppercase; }
+
+    .grid { display: grid; grid-template-columns: 380px 1fr; gap: 28px; }
+    @media(max-width:900px){ .grid { grid-template-columns: 1fr; } }
+
+    .panel {
+      background: rgba(30,8,17,.7); border: 1px solid rgba(212,175,55,.3);
+      border-radius: 16px; padding: 28px; position: relative; backdrop-filter: blur(10px);
+    }
+    .panel::before {
+      content: ''; position: absolute; inset: 6px;
+      border: 1px solid rgba(212,175,55,.1); border-radius: 12px; pointer-events: none;
+    }
+    .panel-title {
+      font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--glow);
+      letter-spacing: .15em; text-transform: uppercase;
+      border-bottom: 1px solid rgba(212,175,55,.2); padding-bottom: 12px; margin-bottom: 20px;
+    }
+
+    label { display: block; font-family: 'Cinzel', serif; font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--parchment); margin-bottom: 6px; margin-top: 16px; }
+    label:first-of-type { margin-top: 0; }
+    input, select, textarea {
+      width: 100%; background: rgba(10,6,13,.85); border: 1px solid rgba(212,175,55,.3);
+      border-radius: 8px; padding: 10px 14px; color: var(--white);
+      font-family: 'Inter', sans-serif; font-size: .9rem; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold); box-shadow: 0 0 12px rgba(212,175,55,.2);
+    }
+    textarea { min-height: 420px; resize: vertical; line-height: 1.65; font-size: .88rem; }
+
+    /* Template Selector Cards */
+    .template-cards { display: grid; gap: 10px; margin-bottom: 4px; }
+    .tpl-card {
+      background: rgba(10,6,13,.7); border: 1px solid rgba(212,175,55,.2);
+      border-radius: 10px; padding: 14px 16px; cursor: pointer; transition: all .2s;
+    }
+    .tpl-card:hover, .tpl-card.active {
+      border-color: var(--gold); background: rgba(140,20,36,.25);
+      box-shadow: 0 0 14px rgba(212,175,55,.15);
+    }
+    .tpl-card-title { font-family: 'Cinzel', serif; font-size: .85rem; color: var(--glow); margin-bottom: 4px; }
+    .tpl-card-desc { font-size: .78rem; color: var(--parchment); }
+
+    /* Action Buttons */
+    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+    .btn {
+      padding: 12px 18px; border-radius: 8px; font-family: 'Cinzel', serif;
+      font-size: .82rem; letter-spacing: .12em; text-transform: uppercase;
+      cursor: pointer; border: 1px solid var(--gold); transition: all .25s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-primary { background: linear-gradient(135deg, var(--sacred), var(--blood)); color: var(--white); box-shadow: 0 0 14px rgba(140,20,36,.4); }
+    .btn-primary:hover { box-shadow: 0 0 22px rgba(179,32,46,.6); transform: translateY(-1px); }
+    .btn-secondary { background: rgba(212,175,55,.1); color: var(--glow); }
+    .btn-secondary:hover { background: rgba(212,175,55,.2); box-shadow: 0 0 14px rgba(212,175,55,.2); }
+    .btn-full { grid-column: 1/-1; }
+
+    /* Stats bar */
+    .stats-bar { display: flex; gap: 20px; margin-bottom: 12px; }
+    .stat { font-size: .8rem; color: var(--parchment); font-family: 'Cinzel', serif; letter-spacing: .08em; }
+    .stat span { color: var(--gold); font-size: .9rem; }
+
+    /* Tracker table */
+    .tracker-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: .85rem; }
+    .tracker-table th { font-family: 'Cinzel', serif; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--parchment); padding: 8px 12px; border-bottom: 1px solid rgba(212,175,55,.2); text-align: left; }
+    .tracker-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: middle; }
+    .tracker-table tr:hover td { background: rgba(140,20,36,.1); }
+    .status-pill { padding: 3px 10px; border-radius: 12px; font-size: .72rem; font-family: 'Cinzel', serif; }
+    .status-pending  { background: rgba(140,20,36,.3); color: var(--glow); border: 1px solid var(--blood); }
+    .status-sent     { background: rgba(212,175,55,.15); color: var(--gold); border: 1px solid rgba(212,175,55,.4); }
+    .status-replied  { background: rgba(30,100,30,.3); color: #7fcf7f; border: 1px solid rgba(50,150,50,.4); }
+    .status-declined { background: rgba(50,50,60,.3); color: var(--parchment); border: 1px solid rgba(100,100,120,.3); }
+
+    .toast { position: fixed; bottom: 28px; right: 28px; background: rgba(30,8,17,.95); border: 1px solid var(--gold); border-radius: 10px; padding: 14px 20px; font-family: 'Cinzel', serif; font-size: .85rem; color: var(--glow); z-index: 999; transform: translateY(80px); opacity: 0; transition: all .35s ease; pointer-events: none; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="blackletter">The Midnight Mass</div>
+    <div class="subtitle">✦ Email Campaign Composer & Outreach Tracker ✦</div>
+  </header>
+
+  <div class="grid">
+
+    <!-- LEFT: Controls -->
+    <div>
+      <div class="panel">
+        <div class="panel-title">✦ Select Template</div>
+        <div class="template-cards">
+          <div class="tpl-card active" data-tpl="creator" onclick="selectTemplate(this,'creator')">
+            <div class="tpl-card-title">Template A — Creator / Influencer</div>
+            <div class="tpl-card-desc">Alt/goth TikTokers, Instagrammers, YouTubers. VIP role + merch early access offer.</div>
+          </div>
+          <div class="tpl-card" data-tpl="blogger" onclick="selectTemplate(this,'blogger')">
+            <div class="tpl-card-title">Template B — Blogger / Community Leader</div>
+            <div class="tpl-card-desc">Dark aesthetic blog editors, subreddit mods, webzine writers. Cross-promo pitch.</div>
+          </div>
+          <div class="tpl-card" data-tpl="server_owner" onclick="selectTemplate(this,'server_owner')">
+            <div class="tpl-card-title">Template C — Discord Server Owner</div>
+            <div class="tpl-card-desc">Partner pitch to complementary server owners. Mutual shoutout arrangement.</div>
+          </div>
+          <div class="tpl-card" data-tpl="merch" onclick="selectTemplate(this,'merch')">
+            <div class="tpl-card-title">Template D — Merch & Apparel Pre-Launch</div>
+            <div class="tpl-card-desc">Early access email blast. For warm contacts and existing server members.</div>
+          </div>
+        </div>
+
+        <label>Recipient Name</label>
+        <input id="recipName" type="text" placeholder="e.g. DarkLunaArt" oninput="composeEmail()">
+
+        <label>Their Platform / Community</label>
+        <input id="recipPlatform" type="text" placeholder="e.g. TikTok, Instagram, r/goth" oninput="composeEmail()">
+
+        <label>Something Specific You Like About Their Content</label>
+        <input id="recipNote" type="text" placeholder="e.g. your moonrise outfit post from last week" oninput="composeEmail()">
+
+        <label>Your Name / Sign-Off</label>
+        <input id="senderName" type="text" value="Midnight Mass" oninput="composeEmail()">
+
+        <label>UTM Campaign Source Tag</label>
+        <select id="utmSource" onchange="composeEmail()">
+          <option value="email_creator_outreach">email_creator_outreach</option>
+          <option value="email_blogger_outreach">email_blogger_outreach</option>
+          <option value="email_server_partner">email_server_partner</option>
+          <option value="email_merch_prelaunch">email_merch_prelaunch</option>
+          <option value="email_custom">Custom...</option>
+        </select>
+
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="copyEmail()">⧉ Copy Full Email</button>
+          <button class="btn btn-secondary" onclick="copySubjectLine()">⧉ Copy Subject Line</button>
+          <button class="btn btn-secondary btn-full" onclick="logContact()">✦ Log to Outreach Tracker</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Composer & Tracker -->
+    <div style="display:flex; flex-direction:column; gap:28px;">
+
+      <!-- Email Preview -->
+      <div class="panel">
+        <div class="panel-title">✦ Live Email Preview</div>
+        <div class="stats-bar">
+          <div class="stat">Words: <span id="wordCount">0</span></div>
+          <div class="stat">Chars: <span id="charCount">0</span></div>
+          <div class="stat">Read Time: <span id="readTime">~0s</span></div>
+        </div>
+        <label>Subject Line</label>
+        <input id="subjectLine" type="text" readonly style="color:var(--glow); font-family:'Cinzel',serif; font-size:.9rem; letter-spacing:.06em;">
+        <label>Email Body</label>
+        <textarea id="emailBody" spellcheck="true" oninput="updateStats()"></textarea>
+      </div>
+
+      <!-- Outreach Tracker Table -->
+      <div class="panel">
+        <div class="panel-title">✦ Outreach Tracker</div>
+        <div style="font-size:.82rem; color:var(--parchment); margin-bottom:14px;">Contacts you've logged this session. Export CSV to save permanently.</div>
+        <div style="display:flex; justify-content:flex-end; margin-bottom:12px;">
+          <button class="btn btn-secondary" onclick="exportCSV()" style="padding:8px 16px; font-size:.75rem;">Export CSV</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="tracker-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Platform</th>
+                <th>Template</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="trackerBody">
+              <tr>
+                <td colspan="5" style="text-align:center; color:var(--parchment); padding:24px;">No contacts logged yet. Fill the form and click "Log to Outreach Tracker".</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const BASE_URL = "https://discord.gg/midnightmass";
+const TEMPLATES = {
+  creator: {
+    subject: (r) => `Exclusive VIP Invite to Midnight Mass + Early Merch Access ✦`,
+    body: (r) => `Salutations ${r.name || '[Name]'},
+
+I came across your content on ${r.platform || '[Platform]'} and loved ${r.note || 'your aesthetic and energy'}.
+
+We are building "Midnight Mass" — an intimate, late-night sanctuary and Discord community for the sleepless. Dark aesthetics. Real conversations. No dead chats. No fake energy. A quiet place for people who live best after midnight.
+
+We are reserving a select number of VIP Founding Member roles for creators whose vibe aligns with the sanctuary. As a VIP, you'll receive:
+
+  ✦ Exclusive @VIP Sanctuary role + private channel access
+  ✦ Early access to our upcoming apparel collection (dropping soon)
+  ✦ First look at every limited merch drop before it goes public
+
+Here is your personal invite link — built just for you:
+${buildUrl(r.utmSource || 'email_creator_outreach')}
+
+Or scan the sacred codex QR attached to enter.
+
+This offer is reserved for a small, curated circle. Would love to have you.
+
+In reverence,
+${r.sender || 'Midnight Mass'}
+Founder, The Midnight Mass
+discord.gg/midnightmass`
+  },
+
+  blogger: {
+    subject: (r) => `Community Partnership Proposal — Midnight Mass ✦`,
+    body: (r) => `Greetings ${r.name || '[Name]'},
+
+I've been following ${r.platform || '[Community/Blog]'} and genuinely admire ${r.note || 'the depth of your content and community'}.
+
+I'm reaching out from Midnight Mass — a growing nocturnal sanctuary Discord community built for people who live in the dark aesthetic space: gothic culture, dark academia, alternative fashion, late-night conversations, and the quiet intensity that holds all of it together.
+
+We are in an early growth phase and are building partnerships with communities and creators who share the same wavelength. Here's what a partnership could look like:
+
+  ✦ Mutual server/community shoutout to our audiences
+  ✦ Collaborative giveaway around our upcoming apparel launch
+  ✦ Early access affiliate arrangement for your community members
+  ✦ Featured placement in our upcoming #partners channel
+
+Our current invite and brand portal:
+${buildUrl(r.utmSource || 'email_blogger_outreach')}
+
+Open to a quick conversation if this resonates.
+
+In darkness,
+${r.sender || 'Midnight Mass'}
+The Midnight Mass — Strategy Team
+discord.gg/midnightmass`
+  },
+
+  server_owner: {
+    subject: (r) => `Server Partnership — Midnight Mass x ${r.platform || 'Your Server'} ✦`,
+    body: (r) => `Hey ${r.name || '[Server Owner]'},
+
+Came across ${r.platform || 'your server'} and ${r.note || 'loved the community you've built'}. Really solid vibe.
+
+I run Midnight Mass — a nocturnal gothic sanctuary Discord server focused on dark aesthetics, late-night energy, and building a real community (not a dead chat). We've been growing fast and wanted to reach out about a mutual shoutout arrangement.
+
+Here's the proposal:
+
+  ✦ We post a clean, branded shoutout about your server in our #community-spotlight channel
+  ✦ You post our server invite in your #partner-servers or announcements channel
+  ✦ No bot requirements, no obligations — just mutual love and audience sharing
+
+Our invite link:
+${buildUrl(r.utmSource || 'email_server_partner')}
+
+Let me know if you'd be down. Happy to send over our brand media assets too.
+
+— ${r.sender || 'Midnight Mass'}
+discord.gg/midnightmass`
+  },
+
+  merch: {
+    subject: (r) => `✦ Midnight Mass — Early Access Merch Drop Invite`,
+    body: (r) => `${r.name || 'Greetings'},
+
+The first Midnight Mass apparel collection is almost ready.
+
+Before it goes live to the public, we are offering early access to a private circle — people who've been part of the sanctuary from the beginning, and a select few who we believe carry the right energy.
+
+You're on that list.
+
+  ✦ Limited drop. Limited quantities. No restocks.
+  ✦ Exclusive pre-order window: 48 hours before public launch.
+  ✦ VIP Discord role included with every order.
+
+Join the sanctuary now to get first access when the drop goes live:
+${buildUrl(r.utmSource || 'email_merch_prelaunch')}
+
+The mass is gathering. Don't miss it.
+
+— ${r.sender || 'Midnight Mass'}
+discord.gg/midnightmass`
+  }
+};
+
+let currentTpl = 'creator';
+let contacts = [];
+
+function buildUrl(source) {
+  return `${BASE_URL}?utm_source=${source}&utm_medium=email&utm_campaign=midnight_mass_sanctuary`;
+}
+
+function getFields() {
+  return {
+    name:      document.getElementById('recipName').value.trim(),
+    platform:  document.getElementById('recipPlatform').value.trim(),
+    note:      document.getElementById('recipNote').value.trim(),
+    sender:    document.getElementById('senderName').value.trim(),
+    utmSource: document.getElementById('utmSource').value,
+  };
+}
+
+function composeEmail() {
+  const r = getFields();
+  const tpl = TEMPLATES[currentTpl];
+  const subject = tpl.subject(r);
+  const body = tpl.body(r);
+  document.getElementById('subjectLine').value = subject;
+  document.getElementById('emailBody').value = body;
+  updateStats();
+}
+
+function updateStats() {
+  const text = document.getElementById('emailBody').value;
+  const words = text.trim().split(/\s+/).filter(w => w).length;
+  const chars = text.length;
+  const readSec = Math.ceil(words / 3.5);
+  document.getElementById('wordCount').textContent = words;
+  document.getElementById('charCount').textContent = chars;
+  document.getElementById('readTime').textContent = readSec < 60 ? `~${readSec}s` : `~${Math.ceil(readSec/60)}m`;
+}
+
+function selectTemplate(el, tpl) {
+  document.querySelectorAll('.tpl-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentTpl = tpl;
+  // Sync UTM source
+  const sourceMap = { creator: 'email_creator_outreach', blogger: 'email_blogger_outreach', server_owner: 'email_server_partner', merch: 'email_merch_prelaunch' };
+  document.getElementById('utmSource').value = sourceMap[tpl] || 'email_creator_outreach';
+  composeEmail();
+}
+
+function copyEmail() {
+  const subject = document.getElementById('subjectLine').value;
+  const body = document.getElementById('emailBody').value;
+  const full = `Subject: ${subject}\n\n${body}`;
+  navigator.clipboard.writeText(full).then(() => showToast('✦ Full email copied to clipboard'));
+}
+
+function copySubjectLine() {
+  navigator.clipboard.writeText(document.getElementById('subjectLine').value)
+    .then(() => showToast('✦ Subject line copied'));
+}
+
+function logContact() {
+  const r = getFields();
+  if (!r.name && !r.platform) { showToast('⚠ Add a name or platform before logging.'); return; }
+  const contact = { name: r.name || '—', platform: r.platform || '—', template: currentTpl, status: 'pending', email: document.getElementById('emailBody').value };
+  contacts.push(contact);
+  renderTracker();
+  showToast(`✦ ${r.name || 'Contact'} logged to tracker`);
+}
+
+function renderTracker() {
+  const tbody = document.getElementById('trackerBody');
+  if (contacts.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--parchment); padding:24px;">No contacts logged yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = contacts.map((c, i) => `
+    <tr>
+      <td style="color:var(--white)">${c.name}</td>
+      <td style="color:var(--parchment)">${c.platform}</td>
+      <td style="color:var(--parchment); font-size:.78rem;">${c.template}</td>
+      <td><span class="status-pill status-${c.status}">${c.status}</span></td>
+      <td style="display:flex; gap:6px;">
+        <button onclick="updateStatus(${i},'sent')" title="Mark Sent" style="background:rgba(212,175,55,.1); border:1px solid rgba(212,175,55,.3); color:var(--gold); border-radius:6px; padding:4px 8px; cursor:pointer; font-size:.72rem;">Sent</button>
+        <button onclick="updateStatus(${i},'replied')" title="Mark Replied" style="background:rgba(30,100,30,.2); border:1px solid rgba(50,150,50,.3); color:#7fcf7f; border-radius:6px; padding:4px 8px; cursor:pointer; font-size:.72rem;">Replied</button>
+        <button onclick="updateStatus(${i},'declined')" title="Mark Declined" style="background:rgba(50,50,60,.2); border:1px solid rgba(100,100,120,.3); color:var(--parchment); border-radius:6px; padding:4px 8px; cursor:pointer; font-size:.72rem;">Declined</button>
+      </td>
+    </tr>`).join('');
+}
+
+function updateStatus(i, status) {
+  contacts[i].status = status;
+  renderTracker();
+  showToast(`✦ ${contacts[i].name} → ${status}`);
+}
+
+function exportCSV() {
+  if (contacts.length === 0) { showToast('No contacts to export yet.'); return; }
+  const headers = ['Name','Platform','Template','Status'];
+  const rows = contacts.map(c => [c.name, c.platform, c.template, c.status]);
+  const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url;
+  a.download = `MidnightMass_Contacts_${Date.now()}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// Init
+composeEmail();
+</script>
+</body>
+</html>
