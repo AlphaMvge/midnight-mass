@@ -1,0 +1,677 @@
+/* Midnight Mass — Sacred Illuminated Codex Styling System */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600&family=UnifrakturMaguntia&display=swap');
+
+:root {
+  /* Official Visual Foundation: Neon Nocturnal v2.0 Brand Palette */
+  --obsidian-void: #0B0B0B;
+  --deep-wine: #121119;
+  --blood-crimson: #9B1B1B;
+  --sacred-blood: #E11D48;
+  --blood-flame: #8B5CF6;
+  --gold-leaf: #8B5CF6;
+  --gold-glow: #06B6D4;
+  --muted-parchment: #D0D8E8;
+  --pure-white: #FFFFFF;
+  --off-white: #F5F5F7;
+  
+  --surface-card: rgba(18, 17, 25, 0.72);
+  --surface-card-hover: rgba(26, 28, 41, 0.9);
+  --border-gold: rgba(139, 92, 246, 0.4);
+  --border-blood: rgba(225, 29, 72, 0.45);
+  
+  --font-title: 'Cinzel', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-blackletter: 'UnifrakturMaguntia', cursive;
+  
+  --glow-gold: 0 0 15px rgba(139, 92, 246, 0.45), 0 0 30px rgba(37, 99, 235, 0.25);
+  --glow-blood: 0 0 15px rgba(225, 29, 72, 0.5), 0 0 35px rgba(139, 92, 246, 0.3);
+}
+
+/* Font Variant 2: Softer */
+body.font-softer {
+  --font-title: 'Playfair Display', serif;
+  --font-body: 'Source Sans 3', sans-serif;
+}
+
+/* Mood Variant 2: Darker & Heavier */
+body.mood-heavy {
+  --obsidian-void: #040206;
+  --deep-wine: #120309;
+  --surface-card: rgba(18, 3, 9, 0.85);
+  --border-gold: rgba(212, 175, 55, 0.25);
+  --border-blood: rgba(140, 20, 36, 0.6);
+}
+
+/* Mood Variant 3: Moody Cinematic */
+body.mood-cinematic {
+  --obsidian-void: #070913;
+  --deep-wine: #141b2e;
+  --surface-card: rgba(20, 27, 46, 0.7);
+  --sacred-blood: #9e2a3b;
+  --gold-leaf: #cca043;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--obsidian-void);
+  color: var(--off-white);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(84, 13, 26, 0.4) 0%, transparent 65%),
+    radial-gradient(circle at 50% 100%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+}
+
+/* Ambient Candlelight Vignette & Fog */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 50% 50%, transparent 40%, rgba(10, 6, 13, 0.85) 100%),
+    repeating-linear-gradient(0deg, rgba(212, 175, 55, 0.015) 0px, transparent 2px, transparent 4px);
+  z-index: 10;
+}
+
+/* Candle Flame Flicker Particle Overlay */
+.candlelight-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 11;
+  background: radial-gradient(circle at 20% 30%, rgba(230, 198, 109, 0.04) 0%, transparent 40%),
+              radial-gradient(circle at 80% 70%, rgba(179, 32, 46, 0.04) 0%, transparent 40%);
+  animation: candleFlicker 6s infinite alternate ease-in-out;
+}
+
+@keyframes candleFlicker {
+  0% { opacity: 0.7; transform: scale(1); }
+  25% { opacity: 0.9; transform: scale(1.02); }
+  50% { opacity: 0.6; transform: scale(0.99); }
+  75% { opacity: 0.85; transform: scale(1.01); }
+  100% { opacity: 0.75; transform: scale(1); }
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  position: relative;
+  z-index: 12;
+}
+
+/* Sacred Header */
+header {
+  padding: 48px 0 32px;
+  text-align: center;
+  position: relative;
+}
+
+.sacred-emblem-header {
+  margin: 0 auto 16px;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid var(--border-gold);
+  color: var(--gold-leaf);
+  box-shadow: var(--glow-gold);
+  transition: all 0.3s ease;
+}
+
+.sacred-emblem-header svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+
+.brand-badge {
+  display: inline-block;
+  padding: 5px 16px;
+  background: rgba(140, 20, 36, 0.25);
+  border: 1px solid var(--border-blood);
+  border-radius: 20px;
+  font-family: var(--font-title);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: var(--gold-glow);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.codex-hero-title {
+  font-family: var(--font-blackletter);
+  font-size: clamp(2.8rem, 6vw, 4.8rem);
+  line-height: 1.1;
+  background: linear-gradient(180deg, var(--pure-white) 0%, var(--gold-glow) 40%, var(--gold-leaf) 75%, var(--sacred-blood) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+  margin-bottom: 12px;
+}
+
+.codex-hero-subtitle {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted-parchment);
+}
+
+/* Customizer Bar (Controls for Fonts, Logo, Mood, Icon Style) */
+.customizer-bar {
+  background: var(--surface-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  padding: 18px 24px;
+  margin: 28px 0 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+  position: relative;
+}
+
+.customizer-bar::before, .customizer-bar::after {
+  content: '✦';
+  position: absolute;
+  color: var(--gold-leaf);
+  font-size: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.customizer-bar::before { left: 10px; }
+.customizer-bar::after { right: 10px; }
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.control-label {
+  font-family: var(--font-title);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-glow);
+  white-space: nowrap;
+}
+
+.control-select, .control-btn {
+  background: rgba(10, 6, 13, 0.8);
+  border: 1px solid var(--border-gold);
+  color: var(--off-white);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  outline: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.control-select:hover, .control-btn:hover {
+  border-color: var(--gold-leaf);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+}
+
+.control-btn.active {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--gold-leaf);
+  color: var(--gold-glow);
+  box-shadow: var(--glow-gold);
+}
+
+/* Nav Tabs */
+.codex-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 36px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  padding-bottom: 16px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--muted-parchment);
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-btn:hover {
+  color: var(--gold-glow);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+.tab-btn.active {
+  color: var(--gold-glow);
+  background: rgba(140, 20, 36, 0.3);
+  border-color: var(--gold-leaf);
+  box-shadow: var(--glow-gold);
+}
+
+/* Main Grid Layout */
+.app-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Illuminated Manuscript Card */
+.codex-card {
+  background: var(--surface-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-gold);
+  border-radius: 20px;
+  padding: 32px;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
+}
+
+/* Gold Corner Filigree Accents */
+.codex-card::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 16px;
+  pointer-events: none;
+}
+
+.card-title-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.card-title {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  color: var(--gold-glow);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card-icon {
+  color: var(--gold-leaf);
+  display: flex;
+  align-items: center;
+}
+
+/* Form Controls */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-family: var(--font-title);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-parchment);
+  margin-bottom: 8px;
+}
+
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  background: rgba(10, 6, 13, 0.85);
+  border: 1px solid var(--border-gold);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: var(--off-white);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  border-color: var(--gold-leaf);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+  background: rgba(15, 8, 20, 0.95);
+}
+
+/* Preset Buttons Grid */
+.preset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.preset-chip {
+  background: rgba(10, 6, 13, 0.7);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  color: var(--muted-parchment);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.preset-chip:hover, .preset-chip.active {
+  border-color: var(--gold-leaf);
+  color: var(--gold-glow);
+  background: rgba(140, 20, 36, 0.25);
+}
+
+/* Live Preview Canvas Frame */
+.preview-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(10, 6, 13, 0.9);
+  border: 1px solid var(--border-gold);
+  border-radius: 16px;
+  position: relative;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
+  margin-bottom: 24px;
+}
+
+.canvas-wrapper {
+  position: relative;
+  padding: 20px;
+  background: #000;
+  border-radius: 14px;
+  border: 2px solid var(--gold-leaf);
+  box-shadow: var(--glow-gold);
+}
+
+canvas#qrCanvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+/* Primary Action Buttons */
+.btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, var(--sacred-blood) 0%, var(--blood-crimson) 100%);
+  color: var(--off-white);
+  border: 1px solid var(--gold-leaf);
+  padding: 14px 28px;
+  border-radius: 10px;
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: var(--glow-blood);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--blood-flame) 0%, var(--sacred-blood) 100%);
+  box-shadow: 0 0 25px rgba(179, 32, 46, 0.7), var(--glow-gold);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--gold-glow);
+  border: 1px solid var(--border-gold);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-family: var(--font-title);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-secondary:hover {
+  background: rgba(212, 175, 55, 0.25);
+  border-color: var(--gold-leaf);
+  box-shadow: var(--glow-gold);
+}
+
+/* Printable Poster Layout Container */
+.poster-preview-container {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  background: #09050b;
+  border: 3px double var(--gold-leaf);
+  border-radius: 12px;
+  padding: 32px 24px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+}
+
+.poster-preview-container::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  pointer-events: none;
+}
+
+.poster-header-title {
+  font-family: var(--font-blackletter);
+  font-size: 2.8rem;
+  color: var(--gold-glow);
+  line-height: 1.1;
+  margin-bottom: 4px;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.poster-subtitle {
+  font-family: var(--font-title);
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sacred-blood);
+  margin-bottom: 20px;
+}
+
+.poster-qr-frame {
+  display: inline-block;
+  padding: 16px;
+  background: #000;
+  border: 2px solid var(--gold-leaf);
+  border-radius: 8px;
+  margin: 16px 0;
+  box-shadow: 0 0 20px rgba(140, 20, 36, 0.6);
+}
+
+.poster-cta-text {
+  font-family: var(--font-title);
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: var(--off-white);
+  text-transform: uppercase;
+  margin-top: 16px;
+}
+
+.poster-url-badge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 18px;
+  background: rgba(140, 20, 36, 0.4);
+  border: 1px solid var(--sacred-blood);
+  border-radius: 20px;
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: var(--gold-glow);
+}
+
+.poster-merch-tag {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--muted-parchment);
+  text-transform: uppercase;
+}
+
+/* Strategy Directory Table & Cards */
+.strategy-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.strategy-item-card {
+  background: rgba(10, 6, 13, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.strategy-item-card:hover {
+  border-color: var(--gold-leaf);
+  box-shadow: var(--glow-gold);
+  transform: translateY(-2px);
+}
+
+.strategy-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.strategy-badge {
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: rgba(140, 20, 36, 0.4);
+  color: var(--gold-glow);
+  font-family: var(--font-title);
+  letter-spacing: 0.1em;
+}
+
+.strategy-title {
+  font-family: var(--font-title);
+  font-size: 1rem;
+  color: var(--off-white);
+}
+
+.strategy-url-link {
+  color: var(--gold-leaf);
+  text-decoration: none;
+  font-size: 0.85rem;
+  word-break: break-all;
+  display: block;
+  margin: 8px 0;
+  transition: color 0.2s ease;
+}
+
+.strategy-url-link:hover {
+  color: var(--gold-glow);
+  text-decoration: underline;
+}
+
+.strategy-copy-btn {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid var(--border-gold);
+  color: var(--gold-glow);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.strategy-copy-btn:hover {
+  background: var(--gold-leaf);
+  color: #000;
+}
+
+/* Hidden Utility Classes */
+.hidden {
+  display: none !important;
+}
+
+/* Print Overrides */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  body::before, .candlelight-overlay, header, .customizer-bar, .codex-tabs, .btn-primary, .btn-secondary, .form-group {
+    display: none !important;
+  }
+  .poster-preview-container {
+    max-width: 100% !important;
+    border: 4px solid #000 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    padding: 40px !important;
+  }
+  .poster-header-title {
+    color: #000 !important;
+    text-shadow: none !important;
+  }
+  .poster-subtitle {
+    color: #8c1424 !important;
+  }
+  .poster-qr-frame {
+    border: 2px solid #000 !important;
+    box-shadow: none !important;
+  }
+  .poster-cta-text {
+    color: #000 !important;
+  }
+  .poster-url-badge {
+    background: #f0f0f0 !important;
+    border: 1px solid #333 !important;
+    color: #000 !important;
+  }
+}
