@@ -1,0 +1,31 @@
+/* Rustic Charm - https://coolors.co/fffcf2-ccc5b9-403d39-252422-eb5e28 */
+
+- CSV
+
+fffcf2,ccc5b9,403d39,252422,eb5e28
+
+- With #
+
+#fffcf2, #ccc5b9, #403d39, #252422, #eb5e28
+
+- Array
+
+["fffcf2","ccc5b9","403d39","252422","eb5e28"]
+
+- Object
+
+{"Floral White":"fffcf2","Dust Grey":"ccc5b9","Charcoal Brown":"403d39","Carbon Black":"252422","Spicy Paprika":"eb5e28"}
+
+- Extended Array
+
+[{"name":"Floral White","hex":"fffcf2","rgb":[255,252,242],"cmyk":[0,1,5,0],"hsb":[46,5,100],"hsl":[46,100,97],"lab":[99,-1,5]},{"name":"Dust Grey","hex":"ccc5b9","rgb":[204,197,185],"cmyk":[0,3,9,20],"hsb":[38,9,80],"hsl":[38,16,76],"lab":[80,0,7]},{"name":"Charcoal Brown","hex":"403d39","rgb":[64,61,57],"cmyk":[0,5,11,75],"hsb":[34,11,25],"hsl":[34,6,24],"lab":[26,0,3]},{"name":"Carbon Black","hex":"252422","rgb":[37,36,34],"cmyk":[0,3,8,85],"hsb":[40,8,15],"hsl":[40,4,14],"lab":[14,0,1]},{"name":"Spicy Paprika","hex":"eb5e28","rgb":[235,94,40],"cmyk":[0,60,83,8],"hsb":[17,83,92],"hsl":[17,83,54],"lab":[58,52,56]}]
+
+- XML
+
+<palette>
+  <color name="Floral White" hex="fffcf2" r="255" g="252" b="242" />
+  <color name="Dust Grey" hex="ccc5b9" r="204" g="197" b="185" />
+  <color name="Charcoal Brown" hex="403d39" r="64" g="61" b="57" />
+  <color name="Carbon Black" hex="252422" r="37" g="36" b="34" />
+  <color name="Spicy Paprika" hex="eb5e28" r="235" g="94" b="40" />
+</palette>

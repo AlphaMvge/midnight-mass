@@ -1,0 +1,31 @@
+/* Black & Gold Elegance - https://coolors.co/000000-14213d-fca311-e5e5e5-ffffff */
+
+- CSV
+
+000000,14213d,fca311,e5e5e5,ffffff
+
+- With #
+
+#000000, #14213d, #fca311, #e5e5e5, #ffffff
+
+- Array
+
+["000000","14213d","fca311","e5e5e5","ffffff"]
+
+- Object
+
+{"Black":"000000","Prussian Blue":"14213d","Orange":"fca311","Alabaster Grey":"e5e5e5","White":"ffffff"}
+
+- Extended Array
+
+[{"name":"Black","hex":"000000","rgb":[0,0,0],"cmyk":[0,0,0,100],"hsb":[0,0,0],"hsl":[0,0,0],"lab":[0,0,0]},{"name":"Prussian Blue","hex":"14213d","rgb":[20,33,61],"cmyk":[67,46,0,76],"hsb":[221,67,24],"hsl":[221,51,16],"lab":[13,5,-20]},{"name":"Orange","hex":"fca311","rgb":[252,163,17],"cmyk":[0,35,93,1],"hsb":[37,93,99],"hsl":[37,98,53],"lab":[74,24,76]},{"name":"Alabaster Grey","hex":"e5e5e5","rgb":[229,229,229],"cmyk":[0,0,0,10],"hsb":[0,0,90],"hsl":[0,0,90],"lab":[91,0,0]},{"name":"White","hex":"ffffff","rgb":[255,255,255],"cmyk":[0,0,0,0],"hsb":[0,0,100],"hsl":[0,0,100],"lab":[100,0,0]}]
+
+- XML
+
+<palette>
+  <color name="Black" hex="000000" r="0" g="0" b="0" />
+  <color name="Prussian Blue" hex="14213d" r="20" g="33" b="61" />
+  <color name="Orange" hex="fca311" r="252" g="163" b="17" />
+  <color name="Alabaster Grey" hex="e5e5e5" r="229" g="229" b="229" />
+  <color name="White" hex="ffffff" r="255" g="255" b="255" />
+</palette>

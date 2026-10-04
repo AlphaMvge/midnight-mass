@@ -1,0 +1,31 @@
+/* Midnight Garden Party - https://coolors.co/070707-553555-755b69-96c5b0-adf1d2 */
+
+- CSV
+
+070707,553555,755b69,96c5b0,adf1d2
+
+- With #
+
+#070707, #553555, #755b69, #96c5b0, #adf1d2
+
+- Array
+
+["070707","553555","755b69","96c5b0","adf1d2"]
+
+- Object
+
+{"Black":"070707","Blackberry Cream":"553555","Mauve Shadow":"755b69","Muted Teal":"96c5b0","Aquamarine":"adf1d2"}
+
+- Extended Array
+
+[{"name":"Black","hex":"070707","rgb":[7,7,7],"cmyk":[0,0,0,97],"hsb":[0,0,3],"hsl":[0,0,3],"lab":[2,0,0]},{"name":"Blackberry Cream","hex":"553555","rgb":[85,53,85],"cmyk":[0,38,0,67],"hsb":[300,38,33],"hsl":[300,23,27],"lab":[27,20,-14]},{"name":"Mauve Shadow","hex":"755b69","rgb":[117,91,105],"cmyk":[0,22,10,54],"hsb":[328,22,46],"hsl":[328,12,41],"lab":[42,13,-4]},{"name":"Muted Teal","hex":"96c5b0","rgb":[150,197,176],"cmyk":[24,0,11,23],"hsb":[153,24,77],"hsl":[153,29,68],"lab":[76,-20,6]},{"name":"Aquamarine","hex":"adf1d2","rgb":[173,241,210],"cmyk":[28,0,13,5],"hsb":[153,28,95],"hsl":[153,71,81],"lab":[90,-28,8]}]
+
+- XML
+
+<palette>
+  <color name="Black" hex="070707" r="7" g="7" b="7" />
+  <color name="Blackberry Cream" hex="553555" r="85" g="53" b="85" />
+  <color name="Mauve Shadow" hex="755b69" r="117" g="91" b="105" />
+  <color name="Muted Teal" hex="96c5b0" r="150" g="197" b="176" />
+  <color name="Aquamarine" hex="adf1d2" r="173" g="241" b="210" />
+</palette>

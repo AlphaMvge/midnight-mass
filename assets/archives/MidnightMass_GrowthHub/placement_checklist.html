@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Midnight Mass — Placement Checklist & Growth Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a060d; --wine: #1e0811; --blood: #540d1a;
+      --sacred: #8c1424; --flame: #b3202e;
+      --gold: #d4af37; --glow: #e6c66d; --parchment: #c7b39b;
+      --white: #f3efe6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--white);
+      font-family: 'Inter', sans-serif; min-height: 100vh;
+      background-image: radial-gradient(circle at 50% 0%, rgba(84,13,26,.4) 0%, transparent 60%);
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(10,6,13,.8) 100%);
+      z-index: 0;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; position: relative; z-index: 1; }
+
+    /* Header */
+    header { text-align: center; margin-bottom: 40px; }
+    .blackletter {
+      font-family: 'UnifrakturMaguntia', cursive; font-size: 2.8rem;
+      background: linear-gradient(180deg, var(--white) 0%, var(--glow) 40%, var(--gold) 80%, var(--sacred) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 12px rgba(212,175,55,.4));
+    }
+    .subtitle { font-family: 'Cinzel', serif; font-size: .8rem; letter-spacing: .25em; color: var(--parchment); margin-top: 8px; text-transform: uppercase; }
+
+    /* Progress Summary */
+    .summary-bar {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px; margin-bottom: 36px;
+    }
+    .summary-card {
+      background: rgba(30,8,17,.8); border: 1px solid rgba(212,175,55,.25);
+      border-radius: 14px; padding: 18px 20px; text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .summary-num { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--gold); margin-bottom: 4px; }
+    .summary-label { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--parchment); }
+    .summary-card.completed { border-color: rgba(127,207,127,.3); }
+    .summary-card.completed .summary-num { color: #7fcf7f; }
+
+    /* Category Sections */
+    .cat-section { margin-bottom: 32px; }
+    .cat-header {
+      display: flex; align-items: center; gap: 14px;
+      font-family: 'Cinzel', serif; font-size: 1.05rem; color: var(--glow);
+      letter-spacing: .15em; text-transform: uppercase;
+      padding: 10px 0; border-bottom: 1px solid rgba(212,175,55,.2); margin-bottom: 14px;
+    }
+    .cat-badge {
+      font-size: .68rem; padding: 3px 10px; border-radius: 12px;
+      background: rgba(140,20,36,.35); border: 1px solid var(--blood); color: var(--glow);
+    }
+
+    /* Checklist Items */
+    .check-item {
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      align-items: start;
+      gap: 14px;
+      background: rgba(10,6,13,.6); border: 1px solid rgba(212,175,55,.12);
+      border-radius: 12px; padding: 16px 18px; margin-bottom: 10px;
+      transition: all .25s; cursor: pointer;
+    }
+    .check-item:hover { border-color: rgba(212,175,55,.3); background: rgba(30,8,17,.75); }
+    .check-item.done { border-color: rgba(127,207,127,.25); background: rgba(10,30,10,.4); }
+    .check-item.done .item-name { text-decoration: line-through; color: var(--parchment); opacity: .65; }
+
+    .checkbox-ring {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid rgba(212,175,55,.4); flex-shrink: 0; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s; color: transparent; font-size: 14px;
+    }
+    .check-item.done .checkbox-ring {
+      border-color: #7fcf7f; background: rgba(30,100,30,.4); color: #7fcf7f;
+    }
+
+    .item-name { font-size: .92rem; color: var(--white); margin-bottom: 4px; font-weight: 500; }
+    .item-tip  { font-size: .79rem; color: var(--parchment); line-height: 1.5; }
+    .item-url  { font-size: .78rem; color: var(--gold); text-decoration: none; display: inline-block; margin-top: 4px; }
+    .item-url:hover { color: var(--glow); text-decoration: underline; }
+    .item-priority { font-size: .7rem; padding: 3px 9px; border-radius: 10px; white-space: nowrap; align-self: start; margin-top: 2px; font-family: 'Cinzel', serif; }
+    .p-high   { background: rgba(140,20,36,.4); border: 1px solid var(--blood); color: var(--glow); }
+    .p-medium { background: rgba(80,60,10,.4); border: 1px solid rgba(180,140,30,.4); color: var(--gold); }
+    .p-low    { background: rgba(30,30,40,.4); border: 1px solid rgba(100,100,120,.3); color: var(--parchment); }
+
+    /* UTM URL copy row */
+    .utm-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .utm-display { font-size: .75rem; color: rgba(212,175,55,.7); font-family: monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; background: rgba(0,0,0,.3); padding: 4px 8px; border-radius: 4px; }
+    .copy-btn {
+      padding: 4px 10px; border-radius: 6px; font-size: .72rem; font-family: 'Cinzel', serif;
+      background: rgba(212,175,55,.12); border: 1px solid rgba(212,175,55,.3); color: var(--glow);
+      cursor: pointer; white-space: nowrap; transition: all .2s; flex-shrink: 0;
+    }
+    .copy-btn:hover { background: var(--gold); color: #000; }
+
+    /* Reset & Export */
+    .actions { display: flex; gap: 14px; margin-bottom: 28px; flex-wrap: wrap; }
+    .btn { padding: 10px 20px; border-radius: 8px; font-family: 'Cinzel', serif; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; border: 1px solid var(--gold); transition: all .25s; }
+    .btn-primary { background: linear-gradient(135deg, var(--sacred), var(--blood)); color: var(--white); }
+    .btn-primary:hover { box-shadow: 0 0 18px rgba(179,32,46,.5); }
+    .btn-ghost { background: transparent; color: var(--parchment); border-color: rgba(212,175,55,.2); }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--glow); }
+
+    .toast { position: fixed; bottom: 24px; right: 24px; background: rgba(20,8,14,.95); border: 1px solid var(--gold); border-radius: 10px; padding: 12px 18px; font-family: 'Cinzel', serif; font-size: .82rem; color: var(--glow); z-index: 999; transform: translateY(60px); opacity: 0; transition: all .3s; pointer-events: none; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="blackletter">The Midnight Mass</div>
+    <div class="subtitle">✦ Placement Checklist & Campaign Progress Tracker ✦</div>
+  </header>
+
+  <!-- Summary Stats -->
+  <div class="summary-bar">
+    <div class="summary-card"><div class="summary-num" id="totalCount">0</div><div class="summary-label">Total Placements</div></div>
+    <div class="summary-card completed"><div class="summary-num" id="doneCount">0</div><div class="summary-label">Completed</div></div>
+    <div class="summary-card"><div class="summary-num" id="highCount">0</div><div class="summary-label">High Priority Left</div></div>
+    <div class="summary-card"><div class="summary-num" id="pctDone">0%</div><div class="summary-label">Campaign Progress</div></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="openAllHighPriority()">Open All HIGH Priority Sites →</button>
+    <button class="btn btn-ghost" onclick="resetAll()">Reset Checklist</button>
+    <button class="btn btn-ghost" onclick="exportProgress()">Export Progress CSV</button>
+  </div>
+
+  <div id="checklist"></div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const BASE = "https://discord.gg/midnightmass";
+
+const PLACEMENTS = [
+  { cat:"REDDIT", name:"r/goth", priority:"HIGH", tip:"Post gothic aesthetic intro + server invite image. Best time: weekday evenings.", url:"https://reddit.com/r/goth/submit", utm:"reddit_goth", postUrl:"https://reddit.com/r/goth/submit" },
+  { cat:"REDDIT", name:"r/DarkAcademia", priority:"HIGH", tip:"Candlelit, cathedral, and late-night aesthetic discussions. Share atmospheric imagery.", url:"https://reddit.com/r/DarkAcademia/submit", utm:"reddit_darkacademia" },
+  { cat:"REDDIT", name:"r/DiscordServers", priority:"HIGH", tip:"Direct server promotion sub. Post high-res illuminated codex poster with QR embedded.", url:"https://reddit.com/r/DiscordServers/submit", utm:"reddit_discordservers" },
+  { cat:"REDDIT", name:"r/GothStyle", priority:"HIGH", tip:"Core apparel audience. Post outfit photos featuring the Midnight Mass logo or QR.", url:"https://reddit.com/r/GothStyle/submit", utm:"reddit_gothstyle" },
+  { cat:"REDDIT", name:"r/altfashion", priority:"MEDIUM", tip:"Alt fashion community. Great pre-launch merch audience for future apparel drops.", url:"https://reddit.com/r/altfashion/submit", utm:"reddit_altfashion" },
+  { cat:"REDDIT", name:"r/witchcraft", priority:"MEDIUM", tip:"Occult / ritual aesthetic overlap. Post late-night / sacred vibes content.", url:"https://reddit.com/r/witchcraft/submit", utm:"reddit_witchcraft" },
+  { cat:"REDDIT", name:"r/synthwave", priority:"MEDIUM", tip:"Neon noir / night aesthetic. 500k+ members. Share atmospheric art posts.", url:"https://reddit.com/r/synthwave/submit", utm:"reddit_synthwave" },
+  { cat:"REDDIT", name:"r/emogirls", priority:"MEDIUM", tip:"High alt fashion overlap. Post aesthetic content with invite in caption.", url:"https://reddit.com/r/emogirls/submit", utm:"reddit_emogirls" },
+  { cat:"REDDIT", name:"r/Iteration4", priority:"LOW", tip:"Niche dark aesthetic art community. Growing fast.", url:"https://reddit.com/r/Iteration4/submit", utm:"reddit_iteration4" },
+
+  { cat:"DISCORD LISTING", name:"Disboard — Register & Bump", priority:"HIGH", tip:"Tags: goth, night-owl, chill, aesthetic, sanctuary. Bump every 2 hours using bump_reminder.ps1.", url:"https://disboard.org/server/add", utm:"disboard_listing" },
+  { cat:"DISCORD LISTING", name:"Top.gg — Server Listing", priority:"HIGH", tip:"Upload gothic media assets. Link to brand portal. Vote-friendly description.", url:"https://top.gg/servers", utm:"topgg_listing" },
+  { cat:"DISCORD LISTING", name:"Discord.me — Free Listing", priority:"MEDIUM", tip:"Free alt directory. Takes 5 minutes to register.", url:"https://discord.me/servers/add", utm:"discordme_listing" },
+  { cat:"DISCORD LISTING", name:"Discord.street — Register", priority:"MEDIUM", tip:"Growing Discord directory. Easy listing, good exposure.", url:"https://discord.street", utm:"discordstreet_listing" },
+
+  { cat:"SOCIAL MEDIA", name:"TikTok Bio Link", priority:"HIGH", tip:"Add trackable short link to TikTok bio. Post short atmospheric 'join us' reels with overlays.", url:"https://tiktok.com", utm:"tiktok_bio" },
+  { cat:"SOCIAL MEDIA", name:"Instagram Story Link Sticker", priority:"HIGH", tip:"Use social_story_invite_template.png from /assets. Add link sticker to Stories.", url:"https://instagram.com", utm:"instagram_story" },
+  { cat:"SOCIAL MEDIA", name:"Pinterest — Dark Aesthetic Board", priority:"MEDIUM", tip:"Create 'Midnight Mass' moodboard. Pin QR code poster in board description.", url:"https://pinterest.com", utm:"pinterest_board" },
+  { cat:"SOCIAL MEDIA", name:"YouTube Shorts Description", priority:"MEDIUM", tip:"Overlay QR code on mood videos. Paste trackable link in description.", url:"https://youtube.com", utm:"youtube_shorts" },
+
+  { cat:"SUBCULTURE", name:"VampireFreaks Profile + Forum", priority:"MEDIUM", tip:"Classic gothic subculture portal. Build profile, participate in forums, then invite.", url:"https://vampirefreaks.com", utm:"vampirefreaks" },
+  { cat:"SUBCULTURE", name:"Bandcamp Goth Tag — Comment Presence", priority:"LOW", tip:"Engage genuinely on goth/darkwave album pages. Build trust then invite.", url:"https://bandcamp.com/tag/goth", utm:"bandcamp_goth" },
+  { cat:"SUBCULTURE", name:"Last.fm Gothic Rock Community", priority:"LOW", tip:"Join gothic rock tag listener groups. Post aesthetic content and invite.", url:"https://www.last.fm/tag/gothic+rock/listeners", utm:"lastfm_goth" },
+
+  { cat:"PHYSICAL GUERILLA", name:"Goth Club / Venue Restroom Stickers", priority:"HIGH", tip:"3x3\" vinyl QR stickers. Place near mirror corners and stall doors. Use sticker_restroom UTM.", url:null, utm:"sticker_venue_restroom" },
+  { cat:"PHYSICAL GUERILLA", name:"Campus Bulletin Board Flyers", priority:"HIGH", tip:"Print illuminated codex poster 8.5x11. Pin to college/university bulletin boards.", url:null, utm:"flyer_campus_board" },
+  { cat:"PHYSICAL GUERILLA", name:"Merch Package Insert Cards", priority:"HIGH", tip:"Print 4x3\" illuminated codex card. Insert into every hoodie & apparel order.", url:null, utm:"merch_insert_card" },
+  { cat:"PHYSICAL GUERILLA", name:"Vinyl Record Shop Promo Stack", priority:"MEDIUM", tip:"Ask alt/indie record shops and goth boutiques to leave card stacks at the register.", url:null, utm:"vinyl_shop_stack" },
+  { cat:"PHYSICAL GUERILLA", name:"Urban Utility Box / Street Post Sticker", priority:"MEDIUM", tip:"Near goth clubs & alternative neighborhoods. High foot traffic, alt audience.", url:null, utm:"street_post_sticker" },
+];
+
+const CAT_ORDER = ["REDDIT","DISCORD LISTING","SOCIAL MEDIA","SUBCULTURE","PHYSICAL GUERILLA"];
+let done = new Set(JSON.parse(localStorage.getItem('mm_checklist') || '[]'));
+
+function buildUrl(utm) {
+  return `${BASE}?utm_source=${utm}&utm_medium=qr_code&utm_campaign=midnight_mass_sanctuary`;
+}
+
+function render() {
+  const container = document.getElementById('checklist');
+  container.innerHTML = '';
+
+  const cats = {};
+  PLACEMENTS.forEach((p, i) => {
+    if (!cats[p.cat]) cats[p.cat] = [];
+    cats[p.cat].push({ ...p, idx: i });
+  });
+
+  CAT_ORDER.forEach(cat => {
+    if (!cats[cat]) return;
+    const sec = document.createElement('div');
+    sec.className = 'cat-section';
+    const count = cats[cat].length;
+    const doneInCat = cats[cat].filter(p => done.has(p.idx)).length;
+    sec.innerHTML = `<div class="cat-header"><span>${cat}</span><span class="cat-badge">${doneInCat}/${count} complete</span></div>`;
+
+    cats[cat].forEach(p => {
+      const isDone = done.has(p.idx);
+      const utmUrl = buildUrl(p.utm);
+      const item = document.createElement('div');
+      item.className = `check-item${isDone ? ' done' : ''}`;
+      item.innerHTML = `
+        <div class="checkbox-ring">${isDone ? '✓' : ''}</div>
+        <div>
+          <div class="item-name">${p.name}</div>
+          <div class="item-tip">${p.tip}</div>
+          ${p.url ? `<a href="${p.url}" target="_blank" class="item-url" onclick="event.stopPropagation()">→ Open Site ↗</a>` : '<span class="item-url" style="color:var(--parchment)">Physical placement — no link</span>'}
+          <div class="utm-row">
+            <div class="utm-display">${utmUrl}</div>
+            <button class="copy-btn" onclick="event.stopPropagation(); copyUTM('${utmUrl}', this)">Copy Link</button>
+          </div>
+        </div>
+        <span class="item-priority p-${p.priority.toLowerCase()}">${p.priority}</span>
+      `;
+      item.addEventListener('click', () => toggleDone(p.idx));
+      sec.appendChild(item);
+    });
+
+    container.appendChild(sec);
+  });
+
+  updateStats();
+}
+
+function toggleDone(idx) {
+  if (done.has(idx)) { done.delete(idx); } else { done.add(idx); }
+  localStorage.setItem('mm_checklist', JSON.stringify([...done]));
+  render();
+  const p = PLACEMENTS[idx];
+  showToast(done.has(idx) ? `✦ "${p.name}" marked complete` : `↩ "${p.name}" unmarked`);
+}
+
+function updateStats() {
+  const total = PLACEMENTS.length;
+  const doneCount = done.size;
+  const highLeft = PLACEMENTS.filter((p, i) => p.priority === 'HIGH' && !done.has(i)).length;
+  const pct = Math.round((doneCount / total) * 100);
+  document.getElementById('totalCount').textContent = total;
+  document.getElementById('doneCount').textContent = doneCount;
+  document.getElementById('highCount').textContent = highLeft;
+  document.getElementById('pctDone').textContent = pct + '%';
+}
+
+function copyUTM(url, btn) {
+  navigator.clipboard.writeText(url).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    btn.style.background = 'var(--gold)';
+    btn.style.color = '#000';
+    setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.style.color = ''; }, 1800);
+  });
+}
+
+function openAllHighPriority() {
+  const highSites = PLACEMENTS.filter((p, i) => p.priority === 'HIGH' && p.url && !done.has(i));
+  if (!highSites.length) { showToast('✦ All high priority sites done!'); return; }
+  highSites.forEach((p, i) => setTimeout(() => window.open(p.url, '_blank'), i * 600));
+  showToast(`✦ Opening ${highSites.length} high priority sites...`);
+}
+
+function resetAll() {
+  if (!confirm('Reset all checkmarks? This cannot be undone.')) return;
+  done = new Set();
+  localStorage.removeItem('mm_checklist');
+  render();
+  showToast('✦ Checklist reset');
+}
+
+function exportProgress() {
+  const rows = PLACEMENTS.map((p, i) => ({
+    Category: p.cat, Name: p.name, Priority: p.priority,
+    Status: done.has(i) ? 'DONE' : 'PENDING',
+    URL: p.url || 'N/A',
+    UTM_Link: buildUrl(p.utm),
+  }));
+  const headers = Object.keys(rows[0]);
+  const csv = [headers.join(','), ...rows.map(r => headers.map(h => `"${r[h]}"`).join(','))].join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = `MidnightMass_Progress_${Date.now()}.csv`;
+  a.click();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+render();
+</script>
+</body>
+</html>

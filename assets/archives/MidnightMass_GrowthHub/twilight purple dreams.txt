@@ -1,0 +1,31 @@
+/* Twilight Purple Dreams - https://coolors.co/171738-2e1760-3423a6-7180b9-dff3e4 */
+
+- CSV
+
+171738,2e1760,3423a6,7180b9,dff3e4
+
+- With #
+
+#171738, #2e1760, #3423a6, #7180b9, #dff3e4
+
+- Array
+
+["171738","2e1760","3423a6","7180b9","dff3e4"]
+
+- Object
+
+{"Space Indigo":"171738","Deep Twilight":"2e1760","Vivid Royal":"3423a6","Glaucous":"7180b9","Honeydew":"dff3e4"}
+
+- Extended Array
+
+[{"name":"Space Indigo","hex":"171738","rgb":[23,23,56],"cmyk":[59,59,0,78],"hsb":[240,59,22],"hsl":[240,42,15],"lab":[10,11,-22]},{"name":"Deep Twilight","hex":"2e1760","rgb":[46,23,96],"cmyk":[52,76,0,62],"hsb":[259,76,38],"hsl":[259,61,23],"lab":[16,30,-39]},{"name":"Vivid Royal","hex":"3423a6","rgb":[52,35,166],"cmyk":[69,79,0,35],"hsb":[248,79,65],"hsl":[248,65,39],"lab":[26,47,-67]},{"name":"Glaucous","hex":"7180b9","rgb":[113,128,185],"cmyk":[39,31,0,27],"hsb":[228,39,73],"hsl":[228,34,58],"lab":[55,9,-32]},{"name":"Honeydew","hex":"dff3e4","rgb":[223,243,228],"cmyk":[8,0,6,5],"hsb":[135,8,95],"hsl":[135,45,91],"lab":[94,-9,5]}]
+
+- XML
+
+<palette>
+  <color name="Space Indigo" hex="171738" r="23" g="23" b="56" />
+  <color name="Deep Twilight" hex="2e1760" r="46" g="23" b="96" />
+  <color name="Vivid Royal" hex="3423a6" r="52" g="35" b="166" />
+  <color name="Glaucous" hex="7180b9" r="113" g="128" b="185" />
+  <color name="Honeydew" hex="dff3e4" r="223" g="243" b="228" />
+</palette>

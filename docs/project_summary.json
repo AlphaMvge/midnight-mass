@@ -1,0 +1,62 @@
+{
+  "name": "Midnight Mass",
+  "version": "2.1.0",
+  "type": "Custom Discord Server Brand Kit & Admin Media System",
+  "tagline": "A late-night sanctuary for the sleepless. Dark aesthetics. Real conversations. No dead chats. No fake energy.",
+  "invite": "discord.gg/midnightmass",
+  "core_vibe": "Gothic nocturnal sanctuary. Sacred + slightly sinful. Quiet intensity for night owls. Beautiful, slightly dangerous church that only opens after midnight.",
+  "visual_language": {
+    "primary_motifs": [
+      "Staggered 3-line Blackletter Gothic Title ('The Midnight Mass')",
+      "Tri-color horizontal gradient glow (Crimson/Rose -> Neon Purple -> Electric Blue)",
+      "Silhouetted church steeple with cross against full moon",
+      "Deep night sky (void black #0B0B0B to deep night #121119)",
+      "Purple neon glows and halos",
+      "Gothic / tattooed veiled figure (dark nun aesthetic)",
+      "Subtle blood / crimson drips on typography",
+      "Official Server Link: discord.gg/midnightmass"
+    ],
+    "mood_keywords": [
+      "midnight", "sanctuary", "gothic", "blackletter", "cathedral", "full moon", "steeple",
+      "neon purple", "electric blue", "crimson rose", "dark nun", "halo", "late night", "sleepless",
+      "quiet intensity", "sacred", "intimate", "void", "belonging"
+    ],
+    "avoid": [
+      "bright colors", "pastels", "daytime", "cartoon", "cute", "cheerful",
+      "rainbow neon", "gore", "corporate", "minimalist white", "playful"
+    ]
+  },
+  "brand_kit_files": [
+    {
+      "file": "ADMIN_MEDIA_GUIDE.md",
+      "description": "Master media guidelines for server owners and admins"
+    },
+    {
+      "file": "index.html",
+      "description": "Interactive Web Brand Portal with color palette copy, font previews, text FX code, and asset showcase"
+    },
+    {
+      "file": "color_palette.json",
+      "description": "Updated HEX color system with tri-color gradient recipes"
+    },
+    {
+      "file": "typography_spec.json",
+      "description": "Typography specifications for UnifrakturMaguntia (Blackletter), Cinzel (Serif), and Inter (Sans)"
+    },
+    {
+      "file": "BRAND_GUIDE.md",
+      "description": "Master brand creative brief"
+    }
+  ],
+  "assets": [
+    "assets/logo_192.png",
+    "assets/poster_church_moon.jpg",
+    "assets/banner_church_moon.jpg",
+    "assets/promo_invite_card.jpg",
+    "assets/blackletter_neon_banner.png",
+    "assets/admin_announcement_template.png",
+    "assets/social_story_invite_template.png",
+    "assets/role_icons_badge_set.png",
+    "assets/stream_media_overlay.png"
+  ]
+}

@@ -1,0 +1,31 @@
+/* Midnight Magic - https://coolors.co/210b2c-55286f-bc96e6-d8b4e2-ae759f */
+
+- CSV
+
+210b2c,55286f,bc96e6,d8b4e2,ae759f
+
+- With #
+
+#210b2c, #55286f, #bc96e6, #d8b4e2, #ae759f
+
+- Array
+
+["210b2c","55286f","bc96e6","d8b4e2","ae759f"]
+
+- Object
+
+{"Midnight Violet":"210b2c","Velvet Orchid":"55286f","Wisteria":"bc96e6","Pink Orchid":"d8b4e2","Petal Pink":"ae759f"}
+
+- Extended Array
+
+[{"name":"Midnight Violet","hex":"210b2c","rgb":[33,11,44],"cmyk":[25,75,0,83],"hsb":[280,75,17],"hsl":[280,60,11],"lab":[7,19,-17]},{"name":"Velvet Orchid","hex":"55286f","rgb":[85,40,111],"cmyk":[23,64,0,56],"hsb":[278,64,44],"hsl":[278,47,30],"lab":[26,34,-33]},{"name":"Wisteria","hex":"bc96e6","rgb":[188,150,230],"cmyk":[18,35,0,10],"hsb":[269,35,90],"hsl":[268,62,75],"lab":[68,30,-35]},{"name":"Pink Orchid","hex":"d8b4e2","rgb":[216,180,226],"cmyk":[4,20,0,11],"hsb":[287,20,89],"hsl":[287,44,80],"lab":[78,21,-18]},{"name":"Petal Pink","hex":"ae759f","rgb":[174,117,159],"cmyk":[0,33,9,32],"hsb":[316,33,68],"hsl":[316,26,57],"lab":[56,29,-13]}]
+
+- XML
+
+<palette>
+  <color name="Midnight Violet" hex="210b2c" r="33" g="11" b="44" />
+  <color name="Velvet Orchid" hex="55286f" r="85" g="40" b="111" />
+  <color name="Wisteria" hex="bc96e6" r="188" g="150" b="230" />
+  <color name="Pink Orchid" hex="d8b4e2" r="216" g="180" b="226" />
+  <color name="Petal Pink" hex="ae759f" r="174" g="117" b="159" />
+</palette>

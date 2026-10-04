@@ -1,0 +1,45 @@
+{
+  "project": "Midnight Mass",
+  "version": "2.0.0",
+  "description": "Unified typography specifications for Midnight Mass admins and owners.",
+  "font_hierarchy": {
+    "display_title": {
+      "primary_font": "UnifrakturMaguntia",
+      "fallback_fonts": ["Cloister Black", "Fette Fraktur", "Chomsky", "Old English Text MT", "serif"],
+      "google_font_url": "https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap",
+      "usage": "Main Title graphics ('The Midnight Mass'), Event Headers, Server Name Graphics",
+      "style": "Blackletter / Gothic calligraphic script",
+      "text_effects": {
+        "gradient": "linear-gradient(90deg, #E11D48 0%, #8B5CF6 50%, #2563EB 100%)",
+        "drop_shadow": "0 0 20px rgba(139, 92, 246, 0.7), 0 0 40px rgba(225, 29, 72, 0.5), 0 0 60px rgba(37, 99, 235, 0.5)",
+        "stroke": "1px solid rgba(255, 255, 255, 0.9)"
+      }
+    },
+    "subheading_gothic": {
+      "primary_font": "Cinzel",
+      "fallback_fonts": ["Playfair Display", "Times New Roman", "serif"],
+      "google_font_url": "https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&display=swap",
+      "usage": "Channel headers, Section titles, Role names, Promo subtitles ('A LATE-NIGHT SANCTUARY')",
+      "style": "High-contrast classical Roman/Gothic serif",
+      "letter_spacing": "0.15em to 0.25em (uppercase)"
+    },
+    "body_text": {
+      "primary_font": "Inter",
+      "fallback_fonts": ["Geist", "System-UI", "sans-serif"],
+      "google_font_url": "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap",
+      "usage": "Rule lists, announcement text, Discord embeds, social media body copy",
+      "style": "Clean, highly readable modern sans-serif"
+    }
+  },
+  "editing_software_presets": {
+    "photoshop_canva_text_fx": {
+      "title_text_layer": {
+        "font_family": "UnifrakturMaguntia or Cloister Black",
+        "gradient_overlay": "3-Stop Linear Horizontal (0%: #E11D48 Rose, 50%: #8B5CF6 Purple, 100%: #2563EB Blue)",
+        "stroke": "1px - 2px White (#FFFFFF), Position: Outside or Center",
+        "outer_glow": "Blend Mode: Screen, Opacity: 85%, Color: #8B5CF6 (Purple) or #2563EB (Blue), Size: 25px - 45px",
+        "drop_shadow": "Blend Mode: Multiply, Opacity: 100%, Distance: 5px, Spread: 20%, Size: 15px, Color: #000000"
+      }
+    }
+  }
+}

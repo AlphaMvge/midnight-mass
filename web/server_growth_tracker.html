@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Midnight Mass — Server Growth Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #0a060d; --wine: #1e0811; --blood: #540d1a;
+      --sacred: #8c1424; --flame: #b3202e;
+      --gold: #d4af37; --glow: #e6c66d; --parchment: #c7b39b;
+      --white: #f3efe6;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--white);
+      font-family: 'Inter', sans-serif; min-height: 100vh;
+      background-image: radial-gradient(circle at 50% 0%, rgba(84,13,26,.4) 0%, transparent 60%);
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(10,6,13,.8) 100%); z-index: 0;
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 40px 24px 80px; position: relative; z-index: 1; }
+
+    header { text-align: center; margin-bottom: 40px; }
+    .blackletter {
+      font-family: 'UnifrakturMaguntia', cursive; font-size: 2.8rem;
+      background: linear-gradient(180deg, var(--white) 0%, var(--glow) 40%, var(--gold) 80%, var(--sacred) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 12px rgba(212,175,55,.4));
+    }
+    .subtitle { font-family: 'Cinzel', serif; font-size: .8rem; letter-spacing: .25em; color: var(--parchment); margin-top: 8px; text-transform: uppercase; }
+
+    /* KPI Row */
+    .kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; margin-bottom: 32px; }
+    .kpi-card {
+      background: rgba(30,8,17,.75); border: 1px solid rgba(212,175,55,.25);
+      border-radius: 14px; padding: 22px 20px; position: relative; overflow: hidden;
+      backdrop-filter: blur(8px); text-align: center;
+    }
+    .kpi-card::before { content: ''; position: absolute; inset: 5px; border: 1px solid rgba(212,175,55,.08); border-radius: 10px; pointer-events: none; }
+    .kpi-num { font-family: 'Cinzel', serif; font-size: 2.2rem; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+    .kpi-delta { font-size: .78rem; margin-bottom: 8px; }
+    .kpi-delta.up { color: #7fcf7f; }
+    .kpi-delta.down { color: var(--flame); }
+    .kpi-label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--parchment); }
+
+    /* Main Grid */
+    .main-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; margin-bottom: 24px; }
+    @media(max-width:900px) { .main-grid { grid-template-columns: 1fr; } }
+
+    .panel {
+      background: rgba(30,8,17,.7); border: 1px solid rgba(212,175,55,.25);
+      border-radius: 16px; padding: 28px; position: relative; backdrop-filter: blur(10px);
+    }
+    .panel::before { content: ''; position: absolute; inset: 6px; border: 1px solid rgba(212,175,55,.08); border-radius: 12px; pointer-events: none; }
+    .panel-title {
+      font-family: 'Cinzel', serif; font-size: 1rem; color: var(--glow);
+      letter-spacing: .15em; text-transform: uppercase;
+      border-bottom: 1px solid rgba(212,175,55,.18); padding-bottom: 12px; margin-bottom: 20px;
+    }
+
+    /* Input Row for Adding Data */
+    .input-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    label { font-family: 'Cinzel', serif; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--parchment); display: block; margin-bottom: 5px; }
+    input, select {
+      width: 100%; background: rgba(10,6,13,.85); border: 1px solid rgba(212,175,55,.25);
+      border-radius: 8px; padding: 9px 12px; color: var(--white);
+      font-family: 'Inter', sans-serif; font-size: .88rem; outline: none; transition: border-color .2s;
+    }
+    input:focus, select:focus { border-color: var(--gold); }
+
+    .btn { padding: 10px 20px; border-radius: 8px; font-family: 'Cinzel', serif; font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; border: 1px solid var(--gold); transition: all .25s; }
+    .btn-primary { background: linear-gradient(135deg, var(--sacred), var(--blood)); color: var(--white); }
+    .btn-primary:hover { box-shadow: 0 0 18px rgba(179,32,46,.5); }
+    .btn-ghost { background: transparent; color: var(--parchment); border-color: rgba(212,175,55,.2); }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--glow); }
+
+    /* Data Log Table */
+    .data-table { width: 100%; border-collapse: collapse; font-size: .83rem; }
+    .data-table th { font-family: 'Cinzel', serif; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: var(--parchment); padding: 8px 10px; border-bottom: 1px solid rgba(212,175,55,.18); text-align: left; }
+    .data-table td { padding: 9px 10px; border-bottom: 1px solid rgba(255,255,255,.04); }
+    .data-table tr:hover td { background: rgba(140,20,36,.08); }
+    .del-btn { background: rgba(140,20,36,.3); border: 1px solid var(--blood); color: var(--glow); border-radius: 5px; padding: 2px 7px; font-size: .68rem; cursor: pointer; }
+    .del-btn:hover { background: var(--sacred); }
+
+    /* Source breakdown */
+    .source-bar-wrap { margin-top: 4px; }
+    .source-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: .82rem; }
+    .source-name { width: 160px; flex-shrink: 0; color: var(--parchment); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .source-bar-bg { flex: 1; height: 8px; background: rgba(255,255,255,.06); border-radius: 4px; overflow: hidden; }
+    .source-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--sacred), var(--gold)); transition: width .5s ease; }
+    .source-count { color: var(--gold); font-family: 'Cinzel', serif; font-size: .78rem; width: 40px; text-align: right; flex-shrink: 0; }
+
+    .toast { position: fixed; bottom: 24px; right: 24px; background: rgba(20,8,14,.95); border: 1px solid var(--gold); border-radius: 10px; padding: 12px 18px; font-family: 'Cinzel', serif; font-size: .82rem; color: var(--glow); z-index: 999; transform: translateY(60px); opacity: 0; transition: all .3s; pointer-events: none; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="blackletter">The Midnight Mass</div>
+    <div class="subtitle">✦ Server Growth Dashboard ✦</div>
+  </header>
+
+  <!-- KPIs -->
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-num" id="kpiMembers">—</div>
+      <div class="kpi-delta up" id="kpiMembersDelta">Enter first log ↓</div>
+      <div class="kpi-label">Total Members</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num" id="kpiWeekGain">—</div>
+      <div class="kpi-delta" id="kpiWeekLabel" style="color:var(--parchment)">This period</div>
+      <div class="kpi-label">Net New Members</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num" id="kpiBestSource">—</div>
+      <div class="kpi-delta" style="color:var(--parchment)">Top traffic source</div>
+      <div class="kpi-label">Best Channel</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num" id="kpiGoal">1k</div>
+      <div class="kpi-delta up" id="kpiGoalDelta">Set your goal ↓</div>
+      <div class="kpi-label">Member Goal</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num" id="kpiDaysActive">0</div>
+      <div class="kpi-delta" style="color:var(--parchment)">Days since first entry</div>
+      <div class="kpi-label">Days Tracked</div>
+    </div>
+  </div>
+
+  <!-- Charts + Source Breakdown -->
+  <div class="main-grid">
+
+    <!-- Growth Chart -->
+    <div class="panel">
+      <div class="panel-title">✦ Member Growth Timeline</div>
+      <canvas id="growthChart" height="200"></canvas>
+    </div>
+
+    <!-- Source Breakdown -->
+    <div class="panel">
+      <div class="panel-title">✦ Top Traffic Sources</div>
+      <div class="source-bar-wrap" id="sourceBreakdown">
+        <div style="color:var(--parchment); font-size:.85rem; text-align:center; padding:30px 0;">Log your first member entry below to start tracking sources.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Log New Entry -->
+  <div class="panel" style="margin-bottom:24px;">
+    <div class="panel-title">✦ Log Member Count Entry</div>
+    <div class="input-row">
+      <div>
+        <label>Date</label>
+        <input type="date" id="logDate">
+      </div>
+      <div>
+        <label>Total Member Count</label>
+        <input type="number" id="logMembers" placeholder="e.g. 247" min="0">
+      </div>
+      <div>
+        <label>New Joins Since Last Log</label>
+        <input type="number" id="logNewJoins" placeholder="e.g. 14" min="0">
+      </div>
+      <div>
+        <label>Top Source (UTM / Channel)</label>
+        <select id="logSource">
+          <option value="reddit_goth">reddit_goth</option>
+          <option value="reddit_darkacademia">reddit_darkacademia</option>
+          <option value="reddit_discordservers">reddit_discordservers</option>
+          <option value="reddit_gothstyle">reddit_gothstyle</option>
+          <option value="tiktok_bio">tiktok_bio</option>
+          <option value="instagram_story">instagram_story</option>
+          <option value="disboard_listing">disboard_listing</option>
+          <option value="topgg_listing">topgg_listing</option>
+          <option value="sticker_venue_restroom">sticker_venue_restroom</option>
+          <option value="flyer_campus_board">flyer_campus_board</option>
+          <option value="merch_insert_card">merch_insert_card</option>
+          <option value="email_outreach">email_outreach</option>
+          <option value="organic_word_of_mouth">organic_word_of_mouth</option>
+          <option value="other">other</option>
+        </select>
+      </div>
+      <div>
+        <label>Goal (optional)</label>
+        <input type="number" id="logGoal" placeholder="e.g. 1000" min="1">
+      </div>
+    </div>
+    <div style="display:flex; gap:12px; flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="addEntry()">✦ Log Entry</button>
+      <button class="btn btn-ghost" onclick="exportData()">Export CSV</button>
+      <button class="btn btn-ghost" onclick="clearAll()">Clear All Data</button>
+    </div>
+  </div>
+
+  <!-- Log Table -->
+  <div class="panel">
+    <div class="panel-title">✦ Entry Log</div>
+    <div style="overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Date</th><th>Total Members</th><th>New Joins</th><th>Top Source</th><th>Goal</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="logBody">
+          <tr><td colspan="6" style="text-align:center; color:var(--parchment); padding:22px;">No entries yet. Log your first member count above.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let entries = JSON.parse(localStorage.getItem('mm_growth') || '[]');
+let goalVal = parseInt(localStorage.getItem('mm_goal') || '1000');
+let chart = null;
+
+// Set today as default date
+document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
+document.getElementById('logGoal').value = goalVal;
+
+function addEntry() {
+  const date    = document.getElementById('logDate').value;
+  const members = parseInt(document.getElementById('logMembers').value);
+  const joins   = parseInt(document.getElementById('logNewJoins').value) || 0;
+  const source  = document.getElementById('logSource').value;
+  const goal    = parseInt(document.getElementById('logGoal').value) || goalVal;
+
+  if (!date || isNaN(members)) { showToast('⚠ Date and Member Count required.'); return; }
+
+  goalVal = goal;
+  localStorage.setItem('mm_goal', goal);
+
+  entries.push({ date, members, joins, source, goal });
+  entries.sort((a, b) => new Date(a.date) - new Date(b.date));
+  localStorage.setItem('mm_growth', JSON.stringify(entries));
+
+  document.getElementById('logMembers').value = '';
+  document.getElementById('logNewJoins').value = '';
+  document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
+
+  renderAll();
+  showToast(`✦ Entry logged: ${members} members on ${date}`);
+}
+
+function deleteEntry(i) {
+  entries.splice(i, 1);
+  localStorage.setItem('mm_growth', JSON.stringify(entries));
+  renderAll();
+}
+
+function renderAll() {
+  renderKPIs();
+  renderChart();
+  renderSourceBreakdown();
+  renderTable();
+}
+
+function renderKPIs() {
+  if (!entries.length) return;
+  const latest = entries[entries.length - 1];
+  const prev   = entries.length > 1 ? entries[entries.length - 2] : null;
+  const first  = entries[0];
+
+  document.getElementById('kpiMembers').textContent = latest.members.toLocaleString();
+  document.getElementById('kpiGoal').textContent = goalVal >= 1000 ? (goalVal/1000).toFixed(1) + 'k' : goalVal;
+
+  if (prev) {
+    const diff = latest.members - prev.members;
+    const pct  = Math.round((diff / prev.members) * 100);
+    const el   = document.getElementById('kpiMembersDelta');
+    el.textContent = `${diff >= 0 ? '+' : ''}${diff} (${pct >= 0 ? '+' : ''}${pct}%) from last`;
+    el.className = `kpi-delta ${diff >= 0 ? 'up' : 'down'}`;
+  }
+
+  const totalGain = latest.members - first.members;
+  document.getElementById('kpiWeekGain').textContent = (totalGain >= 0 ? '+' : '') + totalGain.toLocaleString();
+  document.getElementById('kpiWeekLabel').textContent = `since ${first.date}`;
+
+  // Days tracked
+  const daysDiff = Math.round((new Date(latest.date) - new Date(first.date)) / (1000 * 60 * 60 * 24));
+  document.getElementById('kpiDaysActive').textContent = daysDiff;
+
+  // Goal progress
+  const pctGoal = Math.round((latest.members / goalVal) * 100);
+  document.getElementById('kpiGoalDelta').textContent = `${pctGoal}% to goal (${(goalVal - latest.members).toLocaleString()} left)`;
+  document.getElementById('kpiGoalDelta').className = `kpi-delta ${pctGoal >= 50 ? 'up' : ''}`;
+
+  // Best source
+  const sourceCounts = {};
+  entries.forEach(e => { sourceCounts[e.source] = (sourceCounts[e.source] || 0) + e.joins; });
+  const bestSrc = Object.entries(sourceCounts).sort((a,b) => b[1]-a[1])[0];
+  if (bestSrc) {
+    document.getElementById('kpiBestSource').textContent = bestSrc[0].replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase()).slice(0,16);
+  }
+}
+
+function renderChart() {
+  const ctx = document.getElementById('growthChart').getContext('2d');
+  const labels  = entries.map(e => e.date);
+  const members = entries.map(e => e.members);
+  const goals   = entries.map(e => e.goal || goalVal);
+
+  if (chart) chart.destroy();
+
+  chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Total Members',
+          data: members,
+          borderColor: '#d4af37',
+          backgroundColor: 'rgba(212,175,55,.12)',
+          borderWidth: 2.5,
+          pointBackgroundColor: '#d4af37',
+          pointRadius: 5,
+          fill: true,
+          tension: 0.4,
+        },
+        {
+          label: 'Goal',
+          data: goals,
+          borderColor: 'rgba(140,20,36,.6)',
+          borderWidth: 1.5,
+          borderDash: [6, 4],
+          pointRadius: 0,
+          fill: false,
+          tension: 0,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { labels: { color: '#c7b39b', font: { family: 'Cinzel', size: 11 } } },
+        tooltip: { backgroundColor: 'rgba(10,6,13,.95)', titleColor: '#e6c66d', bodyColor: '#f3efe6', borderColor: '#d4af37', borderWidth: 1 }
+      },
+      scales: {
+        x: { ticks: { color: '#c7b39b', font: { size: 11 } }, grid: { color: 'rgba(255,255,255,.04)' } },
+        y: { ticks: { color: '#c7b39b', font: { size: 11 } }, grid: { color: 'rgba(255,255,255,.04)' }, beginAtZero: true }
+      }
+    }
+  });
+}
+
+function renderSourceBreakdown() {
+  const sourceCounts = {};
+  entries.forEach(e => { if (e.joins > 0) sourceCounts[e.source] = (sourceCounts[e.source] || 0) + e.joins; });
+
+  const sorted = Object.entries(sourceCounts).sort((a, b) => b[1] - a[1]);
+  const maxVal = sorted.length ? sorted[0][1] : 1;
+  const el = document.getElementById('sourceBreakdown');
+
+  if (!sorted.length) {
+    el.innerHTML = '<div style="color:var(--parchment); font-size:.85rem; text-align:center; padding:30px 0;">Log entries with new joins to see source breakdown.</div>';
+    return;
+  }
+
+  el.innerHTML = sorted.slice(0, 10).map(([src, count]) => `
+    <div class="source-row">
+      <div class="source-name">${src.replace(/_/g,' ')}</div>
+      <div class="source-bar-bg"><div class="source-bar-fill" style="width:${Math.round((count/maxVal)*100)}%"></div></div>
+      <div class="source-count">+${count}</div>
+    </div>`).join('');
+}
+
+function renderTable() {
+  const tbody = document.getElementById('logBody');
+  if (!entries.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--parchment); padding:22px;">No entries yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = [...entries].reverse().map((e, ri) => {
+    const i = entries.length - 1 - ri;
+    return `<tr>
+      <td>${e.date}</td>
+      <td style="color:var(--gold); font-family:'Cinzel',serif;">${e.members.toLocaleString()}</td>
+      <td style="color:#7fcf7f;">${e.joins > 0 ? '+' + e.joins : '—'}</td>
+      <td style="color:var(--parchment); font-size:.78rem;">${e.source}</td>
+      <td style="color:var(--parchment);">${e.goal || '—'}</td>
+      <td><button class="del-btn" onclick="deleteEntry(${i})">✕</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function exportData() {
+  if (!entries.length) { showToast('No data to export yet.'); return; }
+  const headers = ['Date','Members','New Joins','Source','Goal'];
+  const rows = entries.map(e => [e.date, e.members, e.joins, e.source, e.goal || '']);
+  const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = `MidnightMass_GrowthLog_${Date.now()}.csv`;
+  a.click();
+}
+
+function clearAll() {
+  if (!confirm('Delete all growth data? This cannot be undone.')) return;
+  entries = [];
+  localStorage.removeItem('mm_growth');
+  renderAll();
+  showToast('✦ Data cleared');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+renderAll();
+</script>
+</body>
+</html>
